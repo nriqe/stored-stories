@@ -1,12 +1,13 @@
-console.log("Holaa desde el script de sandbox!!!!!, 4.15pm");
+console.log("Holaa desde el script de sandbox!!!!!, 4.48pm");
 
 const getStoryFromLocalStorage = (
   localStorageJustSeenStoriesKey,
   maxStoriesFromLs,
   idHighlightStoryForYou,
-  classes,
+  strClasses,
   website
 ) => {
+  const classes = JSON.parse(strClasses);
   console.log(
     "NUEVO SCRIPT:",
     localStorageJustSeenStoriesKey,
