@@ -1,21 +1,10 @@
-console.log("Holaa desde el script de sandbox!!!!!, 5.52pm");
-
 const getStoryFromLocalStorage = async (
   localStorageJustSeenStoriesKey,
-  maxStoriesFromLs,
   idHighlightStoryForYou,
   strClasses,
   website
 ) => {
   const classes = JSON.parse(strClasses);
-  console.log(
-    "NUEVO SCRIPT:",
-    localStorageJustSeenStoriesKey,
-    maxStoriesFromLs,
-    idHighlightStoryForYou,
-    classes,
-    website
-  );
 
   const getDeployment = () => {
     let deployment = null;
@@ -30,9 +19,7 @@ const getStoryFromLocalStorage = async (
     return null;
   };
 
-  const deployment = getDeployment() ? `&d=${getDeployment()}` : "&d=4656";
-
-  console.log("DEPLOYMENT: ", deployment);
+  const deployment = getDeployment() ? `&d=${getDeployment()}` : "";
 
   const getPhotoData = async (photoId) => {
     try {
