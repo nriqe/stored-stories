@@ -1,5 +1,4 @@
-console.log("Holaa desde el script de sandbox!!!!!, 5.33pm");
-const FETCH_DOMAIN = "http://localhost";
+console.log("Holaa desde el script de sandbox!!!!!, 5.52pm");
 
 const getStoryFromLocalStorage = async (
   localStorageJustSeenStoriesKey,
@@ -31,7 +30,7 @@ const getStoryFromLocalStorage = async (
     return null;
   };
 
-  const deployment = getDeployment() ? "&d=".concat(getDeployment()) : "ssadsd";
+  const deployment = getDeployment() ? `&d=${getDeployment()}` : "&d=4656";
 
   console.log("DEPLOYMENT: ", deployment);
 
