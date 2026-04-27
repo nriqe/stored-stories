@@ -24,11 +24,7 @@ const getStoryFromLocalStorage = async (
   const getPhotoData = async (photoId) => {
     try {
       const imgResponse = await fetch(
-        "/pf/api/v3/content/fetch/photo-by-id?query={%22_id%22:%22" +
-          photoId +
-          "%22}&_website=" +
-          website +
-          deployment
+        `/pf/api/v3/content/fetch/photo-by-id?query={%22_id%22:%22${photoId}%22}&_website=${website}${deployment}`
       );
 
       if (imgResponse.status === 200) {
