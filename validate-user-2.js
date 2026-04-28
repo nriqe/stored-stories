@@ -9,4 +9,47 @@ const validateUser = (params) => {
     userData,
     userToken
   );
+
+  const {
+    idWelcomeLoginContainer,
+    idWelcomeLoginTitle,
+    idWelcomeLoginSignInButton,
+    mainLogInDisplayNoneClass,
+    idHomeButton,
+    idStoredStoriesButton,
+    activeMainLogInBtnCategoryClass,
+    storiesCardContainerClass,
+    idHighlightStoryContainer,
+    birthdayFrontPageContainerClass,
+    exploreMoreContainerClass,
+    myStoriesContainerClass,
+    contentContainerClass,
+    storiesCardContainerHiddenClass,
+    highlightStoryContainerHiddenClass,
+    birthdayFrontPageContainerHiddenClass,
+    exploreMoreContainerHiddenClass,
+    myStoriesContainerHiddenClass,
+  } = parsedParams;
+
+  console.log(
+    "PARSED CLASSES AND IDS:",
+    idWelcomeLoginContainer,
+    idWelcomeLoginTitle,
+    idWelcomeLoginSignInButton,
+    mainLogInDisplayNoneClass,
+    idHomeButton,
+    idStoredStoriesButton,
+    activeMainLogInBtnCategoryClass,
+    storiesCardContainerClass,
+    idHighlightStoryContainer,
+    birthdayFrontPageContainerClass,
+    exploreMoreContainerClass,
+    myStoriesContainerClass,
+    contentContainerClass,
+    storiesCardContainerHiddenClass,
+    highlightStoryContainerHiddenClass,
+    birthdayFrontPageContainerHiddenClass,
+    exploreMoreContainerHiddenClass,
+    myStoriesContainerHiddenClass
+  );
 };
