@@ -4,10 +4,12 @@ const getStoriesFromLocalStorage = (
   idJustSeenStories,
   strClasses
 ) => {
-  console.log("DESDE SCRIPT:"),
+  console.log(
+    "DESDE SCRIPT:",
     localStorageJustSeenStoriesKey,
     storiesQty,
     idJustSeenStories,
-    strClasses;
+    strClasses
+  );
 };
 
