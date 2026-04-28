@@ -58,7 +58,7 @@ const validateUser = (params) => {
   };
 
   console.log("IS USER PIANO VALID, ", window?.tp?.user?.isUserValid());
-  /* if (window?.tp?.user?.isUserValid()) {
+  if (window?.tp?.user?.isUserValid()) {
     storiesCardContainer[0].classList.remove(storiesCardContainerHiddenClass);
     highlightStoryContainer.classList.remove(
       highlightStoryContainerHiddenClass
@@ -90,5 +90,5 @@ const validateUser = (params) => {
   } else {
     welcomeLoginContainer.classList.remove(mainLogInDisplayNoneClass);
     contentContainer[0].style.display = "none";
-  }*/
+  }
 };
