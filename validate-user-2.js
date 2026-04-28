@@ -1,5 +1,12 @@
-const validateUser = () => {
+const validateUser = (params) => {
   const userData = window.tp.pianoId.getUser() || {};
   const userToken = window?.tp?.pianoId?.getToken() || "";
-  console.log("USER DATA DESDE JS EXTERNO: ", userData, userToken);
+
+  const parsedParams = JSON.parse(params);
+  console.log(
+    "USER DATA DESDE JS EXTERNO: ",
+    parsedParams,
+    userData,
+    userToken
+  );
 };
