@@ -20,13 +20,13 @@ const getStoriesByUser = async (
     let deployment = null;
     if (typeof window !== "undefined") {
       const deploymentTag = document.querySelector('meta[name="deployment"]');
-      deployment = deploymentTag ? deploymentTag.getAttribute("content") : null;
+      deployment = deploymentTag ? deploymentTag.getAttribute("content") : "1";
       if (!deployment || deployment === "$LATEST") {
-        return null;
+        return "2";
       }
       return deployment;
     }
-    return null;
+    return "3";
   };
 
   const deployment = getDeployment() ? `&d=${getDeployment()}` : "&d=1234";
