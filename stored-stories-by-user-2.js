@@ -20,16 +20,16 @@ const getStoriesByUser = async (
     let deployment = null;
     if (typeof window !== "undefined") {
       const deploymentTag = document.querySelector('meta[name="deployment"]');
-      deployment = deploymentTag ? deploymentTag.getAttribute("content") : "1";
+      deployment = deploymentTag ? deploymentTag.getAttribute("content") : null;
       if (!deployment || deployment === "$LATEST") {
-        return "2";
+        return null;
       }
       return deployment;
     }
-    return "3";
+    return null;
   };
 
-  const deployment = getDeployment() ? `&d=${getDeployment()}` : "&d=1234";
+  const deployment = getDeployment() ? `&d=${getDeployment()}` : "";
   const successfullResponse = 200;
   const emptyStoriesContainer = document.getElementById(
     idEmptyStoriesContainer
