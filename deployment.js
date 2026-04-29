@@ -11,6 +11,6 @@ const getDeployment = () => {
     return null;
   };
 
-const deployment = getDeployment() ? `&d=${getDeployment()}` : "aaa";
+const deployment = getDeployment() ? `&d=${getDeployment()}` : "&d=1234";
 
 console.log('DEPLOYMENT DESDE GHP', deployment)
