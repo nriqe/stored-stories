@@ -276,18 +276,14 @@ const getStoriesByUser = async (
       return;
     }
 
-    console.log('IDS DE API: ', storedIdsByUser, storedIdsByUser.slice(0, maxStories));
-
-    /*storedStoriesByUserIds = await getStoriesByUserIds(
+    storedStoriesByUserIds = await getStoriesByUserIds(
       storedIdsByUser.slice(0, maxStories)
     );
-
-    console.log('IDS DE API: ', storedIdsByUser);
 
     if (!storedStoriesByUserIds || storedStoriesByUserIds.length === 0) {      
       return;
     }
     
-    renderStorySafe(storedStoriesByUserIds, true);*/
+    renderStorySafe(storedStoriesByUserIds, true);
   }
 };
