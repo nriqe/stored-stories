@@ -288,6 +288,11 @@ const getStoriesByUser = async (
     storedStoriesByUserIds = await getStoriesByUserIds(
       storedIdsByUser.slice(-maxStories)
     );
+
+    if (!storedStoriesByUserIds || storedStoriesByUserIds.length === 0) {      
+      return;
+    }
+    
     renderStorySafe(storedStoriesByUserIds, true);
   }
 };
