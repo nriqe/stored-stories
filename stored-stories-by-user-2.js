@@ -286,7 +286,7 @@ const getStoriesByUser = async (
     }
 
     storedStoriesByUserIds = await getStoriesByUserIds(
-      storedIdsByUser.slice(-maxStories)
+      storedIdsByUser.slice(maxStories)
     );
 
     if (!storedStoriesByUserIds || storedStoriesByUserIds.length === 0) {      
