@@ -169,7 +169,7 @@ const getStoriesByUser = async (
         storedIdsByUser = storedIdsByUser.filter((id) => id !== storyId);
 
         const nextId = [...storedIdsByUser]
-          .reverse()
+          //.reverse()
           .find((id) => !renderedIds.has(id));
 
         if (nextId) {
