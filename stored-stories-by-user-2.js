@@ -6,16 +6,7 @@ const getStoriesByUser = async (
   strClasses
 ) => {
   const classes = JSON.parse(strClasses);
-  console.log(
-    "DESDE SCRIPT EXTERNO",
-    window?.tp?.user?.isUserValid(),
-    idUserStoriesContainer,
-    idEmptyStoriesContainer,
-    maxStories,
-    website,
-    classes
-  );
-
+ 
   const getDeployment = () => {
     let deployment = null;
     if (typeof window !== "undefined") {
@@ -285,14 +276,18 @@ const getStoriesByUser = async (
       return;
     }
 
-    storedStoriesByUserIds = await getStoriesByUserIds(
+    console.log('IDS DE API: ', storedIdsByUser, storedIdsByUser.slice(0, maxStories));
+
+    /*storedStoriesByUserIds = await getStoriesByUserIds(
       storedIdsByUser.slice(0, maxStories)
     );
+
+    console.log('IDS DE API: ', storedIdsByUser);
 
     if (!storedStoriesByUserIds || storedStoriesByUserIds.length === 0) {      
       return;
     }
     
-    renderStorySafe(storedStoriesByUserIds, true);
+    renderStorySafe(storedStoriesByUserIds, true);*/
   }
 };
