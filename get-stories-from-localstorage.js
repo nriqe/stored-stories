@@ -83,7 +83,7 @@ const getStoriesFromLocalStorage = async (
   const renderStoriesSafe = (stories, idJustSeenStories, clearContainer = true) => {
     const container = document.getElementById(idJustSeenStories);
     if (!container) return;
-
+    console.log('CLEAR CONT:',clearContainer);
     if (clearContainer) container.innerHTML = "";
 
     stories.forEach((story) => {
