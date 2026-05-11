@@ -148,15 +148,16 @@ const getStoriesFromLocalStorage = async (
     return null;
   }
 
-  const lastSeenStories = getMostFrequentSectionStories();
+  const stories = getMostFrequentSectionStories(); 
 
+  lastStories = stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
+
+  renderStoriesSafe(lastStories, idJustSeenStories);
+
+  //
   console.log('NRO DE NOTAS EN LS:', lastSeenStories.length, storiesQty);
 
   const a = storiesQty - lastSeenStories.length
 
   await getLastPublishedStories(source, query, arcSite, deployment);
-
-  lastStories = lastSeenStories.length > 1 ? lastSeenStories.slice(1, storiesQty + 1) : lastSeenStories;
-
-  renderStoriesSafe(lastSeenStories, idJustSeenStories);
 };
