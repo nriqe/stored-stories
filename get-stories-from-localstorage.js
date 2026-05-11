@@ -12,7 +12,7 @@ const audioSvgIcon = `<svg width="15" height="15" viewBox="0 0 15 15" fill="none
 const getStoriesFromLocalStorage = (
   source,
   queryJson,
-  filter,
+  filterJson,
   arcSite,
   localStorageJustSeenStoriesKey,
   storiesQty,
@@ -22,7 +22,7 @@ const getStoriesFromLocalStorage = (
   console.log('DESDE EL SCRIPT:');
   console.log('SOURCE:', source);
   console.log('QUERY: ', JSON.parse(queryJson));
-  console.log('FILTER: ', filter, typeof filter, arcSite);
+  console.log('FILTER: ', JSON.parse(filterJson), typeof filter, arcSite);
   
   const classes = JSON.parse(strClasses);
 
