@@ -140,7 +140,6 @@ const getStoriesFromLocalStorage = (
       console.log("Error", error);
     }
     return null;
-  };
   }
 
   const stories = getMostFrequentSectionStories();
