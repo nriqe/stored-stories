@@ -87,6 +87,7 @@ const getStoriesFromLocalStorage = async (
     container.innerHTML = "";
 
     stories.forEach((story) => {
+      console.log(story);
       const anchor = document.createElement("a");
       anchor.href = story.link;
       anchor.target = "_blank";
@@ -145,12 +146,12 @@ const getStoriesFromLocalStorage = async (
   }
 
   const storiesFromLs = getMostFrequentSectionStories(); 
-  
-  //lastStoriesFromLs = storiesFromLs.length > 1 ? storiesFromLs.slice(1, storiesQty + 1) : storiesFromLs;
-  lastStoriesFromLs = storiesFromLs.slice(1, storiesQty + 1);
-  renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);
 
-  //
+  if (storiesFromLs.length > 0){
+    const lastStoriesFromLs = storiesFromLs.slice(1, storiesQty + 1);
+    renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);  
+  } 
+
   const difference = (storiesQty - storiesFromLs.length) + 1;
   console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
