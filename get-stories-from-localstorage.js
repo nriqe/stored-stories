@@ -12,12 +12,13 @@ const audioSvgIcon = `<svg width="15" height="15" viewBox="0 0 15 15" fill="none
 const getStoriesFromLocalStorage = (
   presets,
   includedFields,
+  arcSite,
   localStorageJustSeenStoriesKey,
   storiesQty,
   idJustSeenStories,
   strClasses
 ) => {
-  console.log('PRESETS',presets);
+  console.log('PRESETS',presets, arcSite);
   console.log('INCLUDED FIELDS', includedFields);
   const classes = JSON.parse(strClasses);
 
