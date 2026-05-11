@@ -80,11 +80,11 @@ const getStoriesFromLocalStorage = async (
     );
   };
 
-  const renderStoriesSafe = (stories, idJustSeenStories) => {
+  const renderStoriesSafe = (stories, idJustSeenStories, clearContainer = true) => {
     const container = document.getElementById(idJustSeenStories);
     if (!container) return;
 
-    container.innerHTML = "";
+    if (clearContainer) container.innerHTML = "";
 
     stories.forEach((story) => {
       console.log(story);
@@ -159,6 +159,6 @@ const getStoriesFromLocalStorage = async (
   if (difference > 0) {
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
     console.log('NOTAS DE RELLENO: ',lastPublishedStories);
-    renderStoriesSafe(lastPublishedStories, idJustSeenStories);  
+    renderStoriesSafe(lastPublishedStories, idJustSeenStories, false);  
   }
 };
