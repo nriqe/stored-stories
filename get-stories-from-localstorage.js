@@ -89,7 +89,7 @@ const getStoriesFromLocalStorage = async (
     stories.forEach((story) => {
       console.log(story);
       const anchor = document.createElement("a");
-      anchor.href = story.link;
+      anchor.href = story.link || story.websites.elcomercio.website_url || '';
       anchor.target = "_blank";
       anchor.setAttribute("rel", "noopener noreferrer");
       anchor.className = classes.story;
@@ -106,20 +106,20 @@ const getStoriesFromLocalStorage = async (
       title.appendChild(date);
       anchor.appendChild(title);
 
-      if (story.hasAudio) {
+      if (story.hasAudio || story.source?.name.toLowerCase().endsWith('.mp3')) {
         audioIcon = audioSvgIcon;
       }
 
-      date.innerHTML = formatDateSmart(story.pubDate) + audioIcon;
+      date.innerHTML = formatDateSmart(story.pubDate || story.display_date || '') + audioIcon;
 
       const divTitle = document.createElement("div");
       divTitle.className = classes.wrapperIconTitle;
 
-      if (story.isPremium) {
+      if (story.isPremium || story.content_restrictions?.content_code === 'free') {
         premiumIcon = ecSvgIcon;
       }
 
-      divTitle.innerHTML = premiumIcon + " " + story.title;
+      divTitle.innerHTML = premiumIcon + " " + (story.title || story.headlines?.basic || '');
       title.appendChild(divTitle);
 
       container.appendChild(anchor);
