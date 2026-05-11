@@ -149,7 +149,7 @@ const getStoriesFromLocalStorage = (
 
   console.log('NRO DE NOTAS EN LS:', stories.length, storiesQty);
 
-  
+  await getLastPublishedStories(source, query, arcSite, deployment);
 
   lastStories = stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
 
