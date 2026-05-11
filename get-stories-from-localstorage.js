@@ -149,7 +149,7 @@ const getStoriesFromLocalStorage = async (
   
   if (storiesFromLs.length > 0){
     //stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
-    const lastStoriesFromLs = storiesFromLs;
+    const lastStoriesFromLs = storiesFromLs.length > 1 ? storiesFromLs.slice(1, storiesQty + 1) : storiesFromLs;
     renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);  
   } 
 
