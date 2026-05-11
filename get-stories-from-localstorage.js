@@ -154,6 +154,6 @@ const getStoriesFromLocalStorage = async (
 
   if (difference > 1) {
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
-    console.log('NOTAS DE RELLENO: 'lastPublishedStories);
+    console.log('NOTAS DE RELLENO: ',lastPublishedStories);
   }  
 };
