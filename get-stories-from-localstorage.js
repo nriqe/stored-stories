@@ -128,11 +128,11 @@ const getStoriesFromLocalStorage = async (
     });
   };
 
-  const getLastPublishedStories = async (source, query, arcSite, deployment) => {
+  const getLastPublishedStories = async (source, query, arcSite, deployment, qty) => {
 
     const currentTime = new Date().getTime();
     const fetchQuery = Object.assign(query, {
-      size: 4
+      size: qty
     });    
         
     try {      
@@ -156,5 +156,5 @@ const getStoriesFromLocalStorage = async (
   const difference = storiesQty - storiesFromLs.length;
   console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
-  await getLastPublishedStories(source, query, arcSite, deployment);
+  await getLastPublishedStories(source, query, arcSite, deployment, difference);
 };
