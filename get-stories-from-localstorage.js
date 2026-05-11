@@ -149,15 +149,12 @@ const getStoriesFromLocalStorage = async (
   }
 
   const storiesFromLs = getMostFrequentSectionStories(); 
-
   lastStoriesFromLs = storiesFromLs.length > 1 ? storiesFromLs.slice(1, storiesQty + 1) : storiesFromLs;
-
   renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);
 
   //
-  console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty);
-
   const difference = storiesQty - storiesFromLs.length;
+  console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
   await getLastPublishedStories(source, query, arcSite, deployment);
 };
