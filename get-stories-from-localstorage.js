@@ -131,9 +131,9 @@ const getStoriesFromLocalStorage = (
   const getLastPublishedStories = async (source, query, arcSite, deployment) => {
 
     const currentTime = new Date().getTime();
-    const fetchQuery = Object.assign(query, 
+    const fetchQuery = Object.assign(query, {
       size: 4
-    )
+    });
     console.log('URL', `/pf/api/v3/content/fetch/${source}?query=${encodeURI(fetchQuery)}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
     try {
       
