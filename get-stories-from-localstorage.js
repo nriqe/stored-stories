@@ -146,9 +146,10 @@ const getStoriesFromLocalStorage = async (
   }
 
   const storiesFromLs = getMostFrequentSectionStories(); 
-
+  
   if (storiesFromLs.length > 0){
-    const lastStoriesFromLs = storiesFromLs.slice(1, storiesQty + 1);
+    //stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
+    const lastStoriesFromLs = storiesFromLs;
     renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);  
   } 
 
