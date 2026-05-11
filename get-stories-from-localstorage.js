@@ -152,7 +152,7 @@ const getStoriesFromLocalStorage = async (
   const difference = (storiesQty - storiesFromLs.length) + 1;
   console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
-  if (difference > 1) {
+  if (difference > 0) {
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
     console.log('NOTAS DE RELLENO: ',lastPublishedStories);
   }  
