@@ -134,7 +134,7 @@ const getStoriesFromLocalStorage = async (
     const fetchQuery = Object.assign(query, {
       size: 4
     });
-    console.log('URL', `/pf/api/v3/content/fetch/${source}?query=${JSON.stringify(fetchQuery)}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
+    console.log('URL', `/pf/api/v3/content/fetch/${source}?query=${encodeURI(JSON.stringify(fetchQuery))}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
     try {
       
       //const response = fetch(`/pf/api/v3/content/fetch/${source}?query=${encodeURI(fetchQuery)}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
