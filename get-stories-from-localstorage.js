@@ -138,13 +138,12 @@ const getStoriesFromLocalStorage = async (
     const url = `/pf/api/v3/content/fetch/${source}?query=${encodeURI(JSON.stringify(fetchQuery))}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`;   
     
     try {      
-      const response = fetch(url);
+      const response = await fetch(url);
       //console.log('RESPONSE:',response.status);
-      if (response.status === 200) {
+      //if (response.status === 200) {
         const data = await response.json();
         console.log(data);
-      }
-
+      //}
     } catch (error) {
       console.log("Error", error);
     }
