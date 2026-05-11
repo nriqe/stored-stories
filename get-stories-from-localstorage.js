@@ -17,10 +17,7 @@ const getStoriesFromLocalStorage = async (
   storiesQty,
   idJustSeenStories,
   strClasses
-) => {
-  console.log('DESDE EL SCRIPT:');
-  console.log('SOURCE:', source);
-  console.log('QUERY: ', JSON.parse(queryJson));
+) => {  
   const query = JSON.parse(queryJson);    
   const classes = JSON.parse(strClasses);
 
@@ -129,7 +126,6 @@ const getStoriesFromLocalStorage = async (
   };
 
   const getLastPublishedStories = async (source, query, arcSite, deployment, qty) => {
-
     const currentTime = new Date().getTime();
     const fetchQuery = Object.assign(query, {
       size: qty
@@ -138,9 +134,9 @@ const getStoriesFromLocalStorage = async (
     try {      
       const response = await fetch(`/pf/api/v3/content/fetch/${source}?query=${encodeURI(JSON.stringify(fetchQuery))}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);     
       if (response.status === 200) {
-        const data = await response.json();
-        console.log(data);
-        const {} = data
+        const data = await response.json();        
+        const { content_elements: lastPublishedStories } = data;
+        return lastPublishedStories;
       }
     } catch (error) {
       console.log("Error", error);
@@ -153,8 +149,11 @@ const getStoriesFromLocalStorage = async (
   renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);
 
   //
-  const difference = storiesQty - storiesFromLs.length;
+  const difference = (storiesQty - storiesFromLs.length) + 1;
   console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
-  await getLastPublishedStories(source, query, arcSite, deployment, difference);
+  if (difference > 1) {
+    const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
+    console.log('NOTAS DE RELLENO: 'lastPublishedStories);
+  }  
 };
