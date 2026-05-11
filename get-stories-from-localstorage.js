@@ -15,14 +15,6 @@ const getStoriesFromLocalStorage = (
   idJustSeenStories,
   strClasses
 ) => {
-  console.log(
-    "DESDE SCRIPT!!!:",
-    localStorageJustSeenStoriesKey,
-    storiesQty,
-    idJustSeenStories,
-    strClasses
-  );
-
   const classes = JSON.parse(strClasses);
 
   const getDeployment = () => {
@@ -130,6 +122,8 @@ const getStoriesFromLocalStorage = (
   };
 
   const stories = getMostFrequentSectionStories();
+
+  console.log('NRO DE NOTAS EN LS:', stories.length, storiesQty);
 
   lastStories = stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
 
