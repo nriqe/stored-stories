@@ -125,7 +125,7 @@ const getStoriesFromLocalStorage = (
     });
   };
 
-  const getLastPublishedStories = () => {
+  const getLastPublishedStories = async () => {
     try {
       const lastPublishedResponse = await fetch(
         `/pf/api/v3/content/fetch/story-feed-by-section-and-date-v2?query={%22_id%22:%22${photoId}%22}&_website=${website}${deployment}`
