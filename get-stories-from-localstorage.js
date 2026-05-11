@@ -115,7 +115,7 @@ const getStoriesFromLocalStorage = async (
       const divTitle = document.createElement("div");
       divTitle.className = classes.wrapperIconTitle;
 
-      if (story.isPremium || story.content_restrictions?.content_code === 'free') {
+      if (story.isPremium || story.content_restrictions?.content_code === 'premium') {
         premiumIcon = ecSvgIcon;
       }
 
