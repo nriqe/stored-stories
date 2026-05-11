@@ -21,7 +21,7 @@ const getStoriesFromLocalStorage = (
   console.log('DESDE EL SCRIPT:');
   console.log('SOURCE:', source);
   console.log('QUERY: ', JSON.parse(queryJson));
-    
+  const query = JSON.parse(queryJson);    
   const classes = JSON.parse(strClasses);
 
   const getDeployment = () => {
@@ -128,9 +128,17 @@ const getStoriesFromLocalStorage = (
     });
   };
 
-  const getLastPublishedStories = async (arcSite, deployment) => {
+  const getLastPublishedStories = async (source, query, arcSite, deployment) => {
+
+    const currentTime = new Date().getTime();
+    const fetchQuery = Object.assign(query, 
+      size: 4
+    )
+    console.log('URL', `/pf/api/v3/content/fetch/${source}?query=${encodeURI(fetchQuery)}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
     try {
       
+      //const response = fetch(`/pf/api/v3/content/fetch/${source}?query=${encodeURI(fetchQuery)}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);
+
     } catch (error) {
       console.log("Error", error);
     }
