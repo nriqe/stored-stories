@@ -133,30 +133,30 @@ const getStoriesFromLocalStorage = async (
     const currentTime = new Date().getTime();
     const fetchQuery = Object.assign(query, {
       size: 4
-    });
-    
-    const url = `/pf/api/v3/content/fetch/${source}?query=${encodeURI(JSON.stringify(fetchQuery))}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`;   
-    
+    });    
+        
     try {      
-      const response = await fetch(url);
-      //console.log('RESPONSE:',response.status);
-      //if (response.status === 200) {
+      const response = await fetch(`/pf/api/v3/content/fetch/${source}?query=${encodeURI(JSON.stringify(fetchQuery))}&d=${deployment}&_website=${arcSite}${deployment}&token=${currentTime}`);     
+      if (response.status === 200) {
         const data = await response.json();
         console.log(data);
-      //}
+        const {} = data
+      }
     } catch (error) {
       console.log("Error", error);
     }
     return null;
   }
 
-  const stories = getMostFrequentSectionStories();
+  const lastSeenStories = getMostFrequentSectionStories();
 
-  console.log('NRO DE NOTAS EN LS:', stories.length, storiesQty);
+  console.log('NRO DE NOTAS EN LS:', lastSeenStories.length, storiesQty);
+
+  const a = storiesQty - lastSeenStories.length
 
   await getLastPublishedStories(source, query, arcSite, deployment);
 
-  lastStories = stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
+  lastStories = lastSeenStories.length > 1 ? lastSeenStories.slice(1, storiesQty + 1) : lastSeenStories;
 
-  renderStoriesSafe(lastStories, idJustSeenStories);
+  renderStoriesSafe(lastSeenStories, idJustSeenStories);
 };
