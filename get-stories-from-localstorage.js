@@ -139,7 +139,7 @@ const getStoriesFromLocalStorage = async (
     
     try {      
       const response = fetch(url);
-      console.log('RESPONSE:',response.json());
+      console.log('RESPONSE:',await response.json());
 
     } catch (error) {
       console.log("Error", error);
