@@ -10,11 +10,15 @@ const ecSvgIcon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" x
 const audioSvgIcon = `<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.333 15H1.667q-.688 0-1.177-.49A1.6 1.6 0 0 1 0 13.333V7.5q0-1.562.594-2.927t1.604-2.375A7.6 7.6 0 0 1 4.573.594 7.3 7.3 0 0 1 7.5 0q1.563 0 2.927.594t2.375 1.604a7.6 7.6 0 0 1 1.604 2.375Q15 5.937 15 7.5v5.833q0 .688-.49 1.177-.489.49-1.177.49h-1.666q-.688 0-1.177-.49a1.6 1.6 0 0 1-.49-1.177V10q0-.687.49-1.177.489-.49 1.177-.49h1.666V7.5q0-2.437-1.698-4.135T7.5 1.667 3.365 3.365 1.667 7.5v.833h1.666q.688 0 1.177.49T5 10v3.333q0 .688-.49 1.177-.489.49-1.177.49m0-5H1.667v3.333h1.666zm8.334 0v3.333h1.666V10z" fill="#000"/></svg>`;
 
 const getStoriesFromLocalStorage = (
+  presets,
+  includedFields,
   localStorageJustSeenStoriesKey,
   storiesQty,
   idJustSeenStories,
   strClasses
 ) => {
+  console.log('PRESETS',presets);
+  console.log('INCLUDED FIELDS', includedFields);
   const classes = JSON.parse(strClasses);
 
   const getDeployment = () => {
@@ -121,9 +125,29 @@ const getStoriesFromLocalStorage = (
     });
   };
 
+  const getLastPublishedStories = () => {
+    try {
+      const lastPublishedResponse = await fetch(
+        `/pf/api/v3/content/fetch/story-feed-by-section-and-date-v2?query={%22_id%22:%22${photoId}%22}&_website=${website}${deployment}`
+      );
+
+      console.log(lastPublishedResponse)
+      if (lastPublishedResponse.status === 200) {
+        
+        
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+    return null;
+  };
+  }
+
   const stories = getMostFrequentSectionStories();
 
   console.log('NRO DE NOTAS EN LS:', stories.length, storiesQty);
+
+  
 
   lastStories = stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
 
