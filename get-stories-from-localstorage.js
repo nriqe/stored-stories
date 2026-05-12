@@ -148,7 +148,6 @@ const getStoriesFromLocalStorage = async (
   const storiesFromLs = getMostFrequentSectionStories(); 
   
   if (storiesFromLs.length > 0){
-    //stories.length > 1 ? stories.slice(1, storiesQty + 1) : stories;
     const lastStoriesFromLs = storiesFromLs.length > 1 ? storiesFromLs.slice(1, storiesQty + 1) : storiesFromLs;
     renderStoriesSafe(lastStoriesFromLs, idJustSeenStories);  
   } 
@@ -158,7 +157,8 @@ const getStoriesFromLocalStorage = async (
 
   if (difference > 0) {
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
-    console.log('NOTAS DE RELLENO: ',lastPublishedStories);
+    const finalLastPublishedStories = storiesFromLs.length === 0 ? lastPublishedStories.slice(1) : lastPublishedStories;
+    console.log('NOTAS DE RELLENO: ',lastPublishedStories, finalLastPublishedStories);
     renderStoriesSafe(lastPublishedStories, idJustSeenStories, false);  
   }
 };
