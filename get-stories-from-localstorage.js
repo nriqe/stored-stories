@@ -159,6 +159,6 @@ const getStoriesFromLocalStorage = async (
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
     const finalLastPublishedStories = storiesFromLs.length === 0 ? lastPublishedStories.slice(1) : lastPublishedStories;
     console.log('NOTAS DE RELLENO: ',lastPublishedStories, finalLastPublishedStories);
-    renderStoriesSafe(lastPublishedStories, idJustSeenStories, false);  
+    renderStoriesSafe(finalLastPublishedStories, idJustSeenStories, false);  
   }
 };
