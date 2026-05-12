@@ -83,11 +83,10 @@ const getStoriesFromLocalStorage = async (
   const renderStoriesSafe = (stories, idJustSeenStories, clearContainer = true) => {
     const container = document.getElementById(idJustSeenStories);
     if (!container) return;
-    console.log('CLEAR CONT:',clearContainer);
+
     if (clearContainer) container.innerHTML = "";
 
     stories.forEach((story) => {
-      console.log(story);
       const anchor = document.createElement("a");
       anchor.href = story.link || story.websites.elcomercio.website_url || '';
       anchor.target = "_blank";
@@ -154,12 +153,10 @@ const getStoriesFromLocalStorage = async (
   } 
 
   const difference = (storiesQty - storiesFromLs.length) + 1;
-  console.log('NRO DE NOTAS EN LS:', storiesFromLs.length, storiesQty, difference);
 
   if (difference > 0) {
     const lastPublishedStories = await getLastPublishedStories(source, query, arcSite, deployment, difference);
     const finalLastPublishedStories = storiesFromLs.length === 0 ? lastPublishedStories.slice(1) : lastPublishedStories;
-    console.log('NOTAS DE RELLENO: ',lastPublishedStories, finalLastPublishedStories);
     renderStoriesSafe(finalLastPublishedStories, idJustSeenStories, false);  
   }
 };
