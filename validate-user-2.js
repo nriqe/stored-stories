@@ -89,21 +89,7 @@ const validateUser = (params) => {
     
     const { firstName } = userData || "";
     welcomeMessage = firstName ? `Hola, ${firstName}` : "Hola";
-    welcomeLoginTitleH1.innerHTML = welcomeMessage;
-
-    //storedStoriesButton.disabled = false;
-
-    /*homeButton.addEventListener("click", () => {
-      homeButton.classList.add(activeButtonClass);
-      storedStoriesButton.classList.remove(activeButtonClass);
-      contentContainer[0].style.display = getDisplayType();
-    });
-
-    storedStoriesButton.addEventListener("click", () => {
-      homeButton.classList.remove(activeButtonClass);
-      storedStoriesButton.classList.add(activeButtonClass);
-      contentContainer[0].style.display = "none";
-    });*/
+    welcomeLoginTitleH1.innerHTML = welcomeMessage;    
   } else {
     welcomeLoginContainer.classList.remove(mainLogInDisplayNoneClass);
     contentContainer[0].style.display = "none";
