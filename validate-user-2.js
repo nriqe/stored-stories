@@ -56,6 +56,14 @@ const validateUser = (params) => {
   const segments = url.pathname.split('/').filter(Boolean);
   console.log('URL:', url, segments);  
 
+  if (homeButton && segments.length === 1) {
+    homeButton.classList.add(activeButtonClass);
+  }
+
+  if (storedStoriesButton && segments.length === 2) {
+    storedStoriesButton.classList.add(activeButtonClass);
+  }
+
   if (window?.tp?.user?.isUserValid()) {
     if (storiesCardContainer[0]){
       storiesCardContainer[0].classList.remove(storiesCardContainerHiddenClass);    
