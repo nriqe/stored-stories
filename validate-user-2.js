@@ -1,8 +1,5 @@
 const validateUser = (params) => {
   const parsedParams = JSON.parse(params);
-
-  console.log('IDS Y CLASES:', parsedParams);
-
   const {
     idWelcomeLoginContainer,
     idWelcomeLoginTitle,
@@ -59,9 +56,7 @@ const validateUser = (params) => {
     return window.screen.width >= 768 ? "flex" : "block";
   };
 
-  console.log("IS USER PIANO VALID, ", window?.tp?.user?.isUserValid());
   if (window?.tp?.user?.isUserValid()) {
-
     if (storiesCardContainer[0]){
       storiesCardContainer[0].classList.remove(storiesCardContainerHiddenClass);    
     }
