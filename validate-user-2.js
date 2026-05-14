@@ -53,7 +53,7 @@ const validateUser = (params) => {
   const getDisplayType = () => window.screen.width >= 768 ? "flex" : "block";
 
   const url = new URL(window.location.href);
-  console.log('URL': url);  
+  console.log('URL:', url);  
 
   if (window?.tp?.user?.isUserValid()) {
     if (storiesCardContainer[0]){
