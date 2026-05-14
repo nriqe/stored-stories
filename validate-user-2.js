@@ -75,11 +75,7 @@ const validateUser = (params) => {
       myStoriesContainer[0].classList.remove(myStoriesContainerHiddenClass);  
     }       
 
-    const userData = window.tp.pianoId.getUser() || {};
-
-    if (userData === {}){
-      throw new Error("Usuario no válido.");
-    }
+    const userData = window.tp.pianoId.getUser() || {};    
     
     const { firstName } = userData || "";
     welcomeMessage = firstName ? `Hola, ${firstName}` : "Hola";
