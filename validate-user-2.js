@@ -1,6 +1,8 @@
 const validateUser = (params) => {
   const parsedParams = JSON.parse(params);
 
+  console.log('IDS Y CLASES:', parsedParams);
+
   const {
     idWelcomeLoginContainer,
     idWelcomeLoginTitle,
@@ -28,7 +30,7 @@ const validateUser = (params) => {
   const highlightStoryContainer = document.getElementById(
     idHighlightStoryContainer
   );
-  const brithdayFrontPageContainer = document.getElementsByClassName(
+  const birthdayFrontPageContainer = document.getElementsByClassName(
     birthdayFrontPageContainerClass
   );
   const exploreMoreContainer = document.getElementsByClassName(
@@ -59,19 +61,35 @@ const validateUser = (params) => {
 
   console.log("IS USER PIANO VALID, ", window?.tp?.user?.isUserValid());
   if (window?.tp?.user?.isUserValid()) {
-    storiesCardContainer[0].classList.remove(storiesCardContainerHiddenClass);
-    highlightStoryContainer.classList.remove(
-      highlightStoryContainerHiddenClass
-    );
-    brithdayFrontPageContainer[0].classList.remove(
-      birthdayFrontPageContainerHiddenClass
-    );
-    exploreMoreContainer[0].classList.remove(exploreMoreContainerHiddenClass);
-    myStoriesContainer[0].classList.remove(myStoriesContainerHiddenClass);
+
+    if (storiesCardContainer[0]){
+      storiesCardContainer[0].classList.remove(storiesCardContainerHiddenClass);    
+    }
+
+    if (highlightStoryContainer) {
+      highlightStoryContainer.classList.remove(highlightStoryContainerHiddenClass);
+    }
+
+    if (birthdayFrontPageContainer[0]){
+      birthdayFrontPageContainer[0].classList.remove(birthdayFrontPageContainerHiddenClass);  
+    }
+
+    if (exploreMoreContainer[0]) {
+      exploreMoreContainer[0].classList.remove(exploreMoreContainerHiddenClass);  
+    }
+
+    if (myStoriesContainer[0]) {
+      myStoriesContainer[0].classList.remove(myStoriesContainerHiddenClass);  
+    }       
 
     const userData = window.tp.pianoId.getUser() || {};
+
+    if (userData === {}){
+      throw new Error("Usuario no válido.");
+    }
+    
     const { firstName } = userData || "";
-    welcomeMessage = firstName ? "Hola, " + firstName : "Hola";
+    welcomeMessage = firstName ? `Hola, ${firstName}` : "Hola";
     welcomeLoginTitleH1.innerHTML = welcomeMessage;
 
     storedStoriesButton.disabled = false;
