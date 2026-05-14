@@ -43,9 +43,7 @@ const validateUser = (params) => {
     idWelcomeLoginContainer
   );
   const welcomeLoginTitleH1 = document.getElementById(idWelcomeLoginTitle);
-  const welcomeLoginSignInButton = document.getElementById(
-    idWelcomeLoginSignInButton
-  );
+  const welcomeLoginSignInButton = document.getElementById(idWelcomeLoginSignInButton);
   let welcomeMessage = "";
 
   const homeButton = document.getElementById(idHomeButton);
@@ -81,9 +79,9 @@ const validateUser = (params) => {
     welcomeMessage = firstName ? `Hola, ${firstName}` : "Hola";
     welcomeLoginTitleH1.innerHTML = welcomeMessage;
 
-    storedStoriesButton.disabled = false;
+    //storedStoriesButton.disabled = false;
 
-    homeButton.addEventListener("click", () => {
+    /*homeButton.addEventListener("click", () => {
       homeButton.classList.add(activeButtonClass);
       storedStoriesButton.classList.remove(activeButtonClass);
       contentContainer[0].style.display = getDisplayType();
@@ -93,7 +91,7 @@ const validateUser = (params) => {
       homeButton.classList.remove(activeButtonClass);
       storedStoriesButton.classList.add(activeButtonClass);
       contentContainer[0].style.display = "none";
-    });
+    });*/
   } else {
     welcomeLoginContainer.classList.remove(mainLogInDisplayNoneClass);
     contentContainer[0].style.display = "none";
