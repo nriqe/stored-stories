@@ -54,8 +54,7 @@ const validateUser = (params) => {
 
   const url = new URL(window.location.href);
   const segments = url.pathname.split('/').filter(Boolean);
-  console.log('URL:', url, segments);  
-
+  
   if (homeButton && segments.length === 1) {
     homeButton.classList.add(activeButtonClass);
   }
