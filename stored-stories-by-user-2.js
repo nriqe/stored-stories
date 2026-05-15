@@ -3,7 +3,8 @@ const getStoriesByUser = async (
   idEmptyStoriesContainer,
   maxStories,
   website,
-  strClasses
+  strClasses,
+  idShowMoreButton
 ) => {
   const classes = JSON.parse(strClasses);
  
@@ -27,6 +28,9 @@ const getStoriesByUser = async (
   );
   const emptyContainerHiddenClass = classes.emptyContainerHidden;
   const userStoriesContainer = document.getElementById(idUserStoriesContainer);
+  const showMoreButton = document.getElementById(idShowMoreButton);.
+
+  console.log('BOTÓN VER MÁS',showMoreButton);
 
   let storedIdsByUser = [];
   let storedStoriesByUserIds = [];
