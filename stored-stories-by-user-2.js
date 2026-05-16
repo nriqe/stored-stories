@@ -177,6 +177,10 @@ const getStoriesByUser = async (
         } else if (userStoriesContainer.children.length === 0) {
           emptyStoriesContainer.classList.remove(emptyContainerHiddenClass);
         }
+
+        if (renderedIds.size <= minStories && showMoreButton) {
+          showMoreButton.classList.add(showMoreButtonHiddenClass);
+        }
       }
     } catch (error) {
       throw new Error("ERROR DE API DE NOTAS DE USUARIO: ", error);
