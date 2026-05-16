@@ -29,6 +29,7 @@ const getStoriesByUser = async (
   const emptyContainerHiddenClass = classes.emptyContainerHidden;
   const userStoriesContainer = document.getElementById(idUserStoriesContainer);
   const showMoreButton = document.getElementById(idShowMoreButton);
+  const showMoreButtonHiddenClass = classes.showMoreBtnHidden;
 
   console.log('BOTÓN VER MÁS',showMoreButton);
 
