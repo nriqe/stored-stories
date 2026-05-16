@@ -2,6 +2,7 @@ const getStoriesByUser = async (
   idUserStoriesContainer,
   idEmptyStoriesContainer,
   maxStories,
+  minStories,
   website,
   strClasses,
   idShowMoreButton
@@ -290,5 +291,9 @@ const getStoriesByUser = async (
     }
     
     renderStorySafe(storedStoriesByUserIds, true);
+
+    if (renderedIds.size >= minStories && showMoreButton) {
+      showMoreButton.classList.remove(showMoreButtonHiddenClass);
+    }
   }
 };
