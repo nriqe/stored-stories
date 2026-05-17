@@ -8,6 +8,7 @@ const getStoriesByUser = async (
   idShowMoreButton
 ) => {
   const classes = JSON.parse(strClasses);
+  console.log('MAX STORIES: ',maxStories);
  
   const getDeployment = () => {
     let deployment = null;
