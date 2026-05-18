@@ -191,7 +191,7 @@ const getStoriesByUser = async (
         if (nextId) {
           const newStories = await getStoriesByUserIds([nextId]);
           if (newStories && newStories.length > 0) {
-            renderStorySafe(newStories, false);
+            renderStorySafe(newStories, true);
           }
         } else if (userStoriesContainer.children.length === 0) {
           emptyStoriesContainer.classList.remove(emptyContainerHiddenClass);
