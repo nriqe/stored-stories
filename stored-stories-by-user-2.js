@@ -34,7 +34,7 @@ const getStoriesByUser = async (
   const emptyContainerHiddenClass = classes.emptyContainerHidden;
   const userStoriesContainer = document.getElementById(idUserStoriesContainer);
   const loadingTitleClass = classes.loading;
-  const loadingTitleHiddenClass = classes.loadingHidden;  
+  const loadingTitleHiddenClass = classes.loadingHidden;
   const loadingTitle = document.querySelector(`.${loadingTitleClass}`);
   const showMoreButton = document.getElementById(idShowMoreButton);
   const showMoreButtonHiddenClass = classes.showMoreBtnHidden;
@@ -118,6 +118,12 @@ const getStoriesByUser = async (
     } catch (error) {
       throw new Error("ERROR DE API DE NOTAS DE USUARIO: ", error);
     }
+  };
+
+  // --- Loading title helper ---
+
+  const hideLoadingTitle = () => {
+    if (loadingTitle) loadingTitle.classList.add(loadingTitleHiddenClass);
   };
 
   // --- Spinner y botón helpers ---
@@ -352,6 +358,7 @@ const getStoriesByUser = async (
 
     if (!storedIdsByUser || storedIdsByUser.length === 0) {
       emptyStoriesContainer.classList.remove(emptyContainerHiddenClass);
+      hideLoadingTitle();
       return;
     }
 
@@ -361,10 +368,12 @@ const getStoriesByUser = async (
     const firstPageStories = await getStoriesByUserIds(firstPageIds);
 
     if (!firstPageStories || firstPageStories.length === 0) {
+      hideLoadingTitle();
       return;
     }
 
     renderStorySafe(firstPageStories, true);
+    hideLoadingTitle();
 
     // Configurar botón "Ver más": mostrar sólo si hay más páginas
     if (showMoreButton) {
