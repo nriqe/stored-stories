@@ -40,13 +40,16 @@ const validateUser = (params) => {
 
   const url = new URL(window.location.href);
   const segments = url.pathname.split('/').filter(Boolean);
+  let isHome = false;
+  let isStoredStories = false;
   
   if (homeButton && segments.length === 1) {
+    isHome = true;
     homeButton.classList.add(activeButtonClass);
   }
 
   if (storedStoriesButton && segments.length === 2) {
-    homeButton.disabled = true;
+    isStoredStories = true;
     storedStoriesButton.classList.add(activeButtonClass);
   }
 
@@ -80,17 +83,23 @@ const validateUser = (params) => {
     storedStoriesButton.disabled = false;
 
     homeButton.addEventListener("click", () => {
-      homeButton.classList.add(activeButtonClass);
-      storedStoriesButton.classList.remove(activeButtonClass);
-      contentContainer[0].style.display = getDisplayType();
+      if(isHome) { 
+        homeButton.classList.add(activeButtonClass);
+        storedStoriesButton.classList.remove(activeButtonClass);
+        contentContainer[0].style.display = getDisplayType();
+      }
     });
 
     storedStoriesButton.addEventListener("click", () => {
-      if(segments.length === 1) {        
+      if(isHome) {        
         homeButton.classList.remove(activeButtonClass);
         storedStoriesButton.classList.add(activeButtonClass);
         contentContainer[0].style.display = "none";
-      }      
+      }    
+      
+      if(isStoredStories) {
+        window.location.href = "/para-ti/";  
+      }
     });
     
   } else {
