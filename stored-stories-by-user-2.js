@@ -25,15 +25,16 @@ const getStoriesByUser = async (
 
   const deployment = getDeployment() ? `&d=${getDeployment()}` : "";
   const successfullResponse = 200;
-  const emptyStoriesContainer = document.getElementById(
-    idEmptyStoriesContainer
-  );
+  const emptyStoriesContainer = document.getElementById(idEmptyStoriesContainer);
   const emptyContainerHiddenClass = classes.emptyContainerHidden;
   const userStoriesContainer = document.getElementById(idUserStoriesContainer);
   const showMoreButton = document.getElementById(idShowMoreButton);
   const showMoreButtonHiddenClass = classes.showMoreBtnHidden;
+  const spinnerClass = classes.spinner;
+  const loadingSpinnerClass = classes.loadingSpinner;  
+  const spinner = document.querySelector(`'.${spinnerClass}`);
 
-  console.log('BOTÓN VER MÁS',showMoreButton);
+  console.log('BOTÓN VER MÁS',showMoreButton,spinner);
 
   let storedIdsByUser = [];
   let storedStoriesByUserIds = [];
