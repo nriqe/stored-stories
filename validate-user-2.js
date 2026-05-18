@@ -21,27 +21,13 @@ const validateUser = (params) => {
     myStoriesContainerHiddenClass,
   } = parsedParams;
 
-  const storiesCardContainer = document.getElementsByClassName(
-    storiesCardContainerClass
-  );
-  const highlightStoryContainer = document.getElementById(
-    idHighlightStoryContainer
-  );
-  const birthdayFrontPageContainer = document.getElementsByClassName(
-    birthdayFrontPageContainerClass
-  );
-  const exploreMoreContainer = document.getElementsByClassName(
-    exploreMoreContainerClass
-  );
-  const myStoriesContainer = document.getElementsByClassName(
-    myStoriesContainerClass
-  );
-  const contentContainer = document.getElementsByClassName(
-    contentContainerClass
-  );
-  const welcomeLoginContainer = document.getElementById(
-    idWelcomeLoginContainer
-  );
+  const storiesCardContainer = document.getElementsByClassName(storiesCardContainerClass);
+  const highlightStoryContainer = document.getElementById(idHighlightStoryContainer);
+  const birthdayFrontPageContainer = document.getElementsByClassName(birthdayFrontPageContainerClass);
+  const exploreMoreContainer = document.getElementsByClassName(exploreMoreContainerClass);
+  const myStoriesContainer = document.getElementsByClassName(myStoriesContainerClass);
+  const contentContainer = document.getElementsByClassName(contentContainerClass);
+  const welcomeLoginContainer = document.getElementById(idWelcomeLoginContainer);
   const welcomeLoginTitleH1 = document.getElementById(idWelcomeLoginTitle);
   const welcomeLoginSignInButton = document.getElementById(idWelcomeLoginSignInButton);
   let welcomeMessage = "";
@@ -89,6 +75,21 @@ const validateUser = (params) => {
     const { firstName } = userData || "";
     welcomeMessage = firstName ? `Hola, ${firstName}` : "Hola";
     welcomeLoginTitleH1.innerHTML = welcomeMessage;    
+
+    storedStoriesButton.disabled = false;
+
+    homeButton.addEventListener("click", () => {
+      homeButton.classList.add(activeButtonClass);
+      storedStoriesButton.classList.remove(activeButtonClass);
+      contentContainer[0].style.display = getDisplayType();
+    });
+
+    storedStoriesButton.addEventListener("click", () => {
+      homeButton.classList.remove(activeButtonClass);
+      storedStoriesButton.classList.add(activeButtonClass);
+      contentContainer[0].style.display = "none";
+    });
+    
   } else {
     welcomeLoginContainer.classList.remove(mainLogInDisplayNoneClass);
     contentContainer[0].style.display = "none";
