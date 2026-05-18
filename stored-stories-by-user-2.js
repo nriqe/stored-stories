@@ -8,8 +8,13 @@ const getStoriesByUser = async (
   idShowMoreButton
 ) => {
   const classes = JSON.parse(strClasses);
-  console.log('MAX STORIES: ',maxStories);
- 
+  console.log('MAX STORIES: ', maxStories);
+
+  // Validación: maxStories no puede ser mayor a 20
+  if (maxStories > 20) {
+    throw new Error(`maxStories no puede ser mayor a 20. Valor recibido: ${maxStories}`);
+  }
+
   const getDeployment = () => {
     let deployment = null;
     if (typeof window !== "undefined") {
@@ -31,17 +36,19 @@ const getStoriesByUser = async (
   const showMoreButton = document.getElementById(idShowMoreButton);
   const showMoreButtonHiddenClass = classes.showMoreBtnHidden;
   const spinnerClass = classes.spinner;
-  const loadingSpinnerClass = classes.loadingSpinner;  
+  const loadingSpinnerClass = classes.loadingSpinner;
   const spinner = document.querySelector(`.${spinnerClass}`);
 
-  console.log('BOTÓN VER MÁS Y SPINNER',showMoreButton,spinner);
+  console.log('BOTÓN VER MÁS Y SPINNER', showMoreButton, spinner);
 
+  // Estado de paginación
   let storedIdsByUser = [];
-  let storedStoriesByUserIds = [];
   let renderedIds = new Set();
+  let currentPage = 0;
+
+  // --- API helpers ---
 
   const getStoriesIdsByUser = async () => {
-    let storedIdsByUser = [];
     const userToken = window?.tp?.pianoId?.getToken() || "";
     const currentTime = new Date().getTime();
 
@@ -72,21 +79,19 @@ const getStoriesByUser = async (
       }
 
       const result = await response.json();
-      storedIdsByUser = result.data;
-      return storedIdsByUser;
+      return result.data;
     } catch (error) {
       throw new Error("ERROR DE API DE OBTENER IDS: ", error);
     }
   };
 
-  const getStoriesByUserIds = async (storedIdsByUser) => {
-    let storedStoriesByUserIds = [];
+  const getStoriesByUserIds = async (ids) => {
     const currentTime = new Date().getTime();
 
     try {
       const response = await fetch(
         `/pf/api/v3/content/fetch/get-stories-by-user-ids?query=${JSON.stringify(
-          { ids: storedIdsByUser.join(","), website }
+          { ids: ids.join(","), website }
         )}&_website=${website}${deployment}&token=${currentTime}`,
         {
           method: "GET",
@@ -106,12 +111,26 @@ const getStoriesByUser = async (
       }
 
       const result = await response.json();
-      storedStoriesByUserIds = result;
-      return storedStoriesByUserIds;
+      return result;
     } catch (error) {
       throw new Error("ERROR DE API DE NOTAS DE USUARIO: ", error);
     }
   };
+
+  // --- Spinner y botón helpers ---
+
+  const setShowMoreLoading = (isLoading) => {
+    if (!showMoreButton) return;
+    if (isLoading) {
+      showMoreButton.disabled = true;
+      if (spinner) spinner.classList.add(loadingSpinnerClass);
+    } else {
+      showMoreButton.disabled = false;
+      if (spinner) spinner.classList.remove(loadingSpinnerClass);
+    }
+  };
+
+  // --- Utilidades ---
 
   const formatDateSmart = (iso) => {
     const date = new Date(iso);
@@ -167,9 +186,7 @@ const getStoriesByUser = async (
         renderedIds.delete(storyId);
         storedIdsByUser = storedIdsByUser.filter((id) => id !== storyId);
 
-        const nextId = [...storedIdsByUser]
-          //.reverse()
-          .find((id) => !renderedIds.has(id));
+        const nextId = [...storedIdsByUser].find((id) => !renderedIds.has(id));
 
         if (nextId) {
           const newStories = await getStoriesByUserIds([nextId]);
@@ -189,9 +206,12 @@ const getStoriesByUser = async (
     }
   };
 
+  // --- Render ---
+
   const renderStorySafe = (storedStoriesByUserIds, atFinalPos) => {
     storedStoriesByUserIds.forEach((story) => {
       renderedIds.add(story._id);
+
       const articleContainer = document.createElement("article");
       articleContainer.className = classes.storedStory;
 
@@ -267,7 +287,6 @@ const getStoriesByUser = async (
       }
 
       divStoryContainer.append(divAuthorTimeSection);
-
       articleContainer.append(divStoryContainer);
 
       if (atFinalPos) {
@@ -280,6 +299,51 @@ const getStoriesByUser = async (
     });
   };
 
+  // --- Paginación ---
+
+  const getIdsForPage = (page) => {
+    const start = (page - 1) * maxStories;
+    const end = start + maxStories;
+    return storedIdsByUser.slice(start, end);
+  };
+
+  const hasMorePages = () => {
+    return currentPage * maxStories < storedIdsByUser.length;
+  };
+
+  const updateShowMoreButtonVisibility = () => {
+    if (!showMoreButton) return;
+    if (hasMorePages()) {
+      showMoreButton.classList.remove(showMoreButtonHiddenClass);
+    } else {
+      showMoreButton.classList.add(showMoreButtonHiddenClass);
+    }
+  };
+
+  const loadNextPage = async () => {
+    if (!hasMorePages()) return;
+
+    setShowMoreLoading(true);
+
+    try {
+      currentPage += 1;
+      const idsToFetch = getIdsForPage(currentPage);
+      const newStories = await getStoriesByUserIds(idsToFetch);
+
+      if (newStories && newStories.length > 0) {
+        renderStorySafe(newStories, true);
+      }
+
+      updateShowMoreButtonVisibility();
+    } catch (error) {
+      console.error('Error al cargar más historias:', error);
+    } finally {
+      setShowMoreLoading(false);
+    }
+  };
+
+  // --- Inicialización ---
+
   if (window?.tp?.user?.isUserValid()) {
     storedIdsByUser = await getStoriesIdsByUser();
 
@@ -288,18 +352,21 @@ const getStoriesByUser = async (
       return;
     }
 
-    storedStoriesByUserIds = await getStoriesByUserIds(
-      storedIdsByUser.slice(0, maxStories)
-    );
+    // Renderizar primera página
+    currentPage = 1;
+    const firstPageIds = getIdsForPage(currentPage);
+    const firstPageStories = await getStoriesByUserIds(firstPageIds);
 
-    if (!storedStoriesByUserIds || storedStoriesByUserIds.length === 0) {      
+    if (!firstPageStories || firstPageStories.length === 0) {
       return;
     }
-    
-    renderStorySafe(storedStoriesByUserIds, true);
 
-    if (renderedIds.size >= minStories && showMoreButton) {
-      showMoreButton.classList.remove(showMoreButtonHiddenClass);
+    renderStorySafe(firstPageStories, true);
+
+    // Configurar botón "Ver más": mostrar sólo si hay más páginas
+    if (showMoreButton) {
+      updateShowMoreButtonVisibility();
+      showMoreButton.addEventListener('click', loadNextPage);
     }
   }
 };
