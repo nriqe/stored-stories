@@ -32,7 +32,7 @@ const getStoriesByUser = async (
   const showMoreButtonHiddenClass = classes.showMoreBtnHidden;
   const spinnerClass = classes.spinner;
   const loadingSpinnerClass = classes.loadingSpinner;  
-  const spinner = document.querySelector(`'.${spinnerClass}`);
+  const spinner = document.querySelector(`'.${spinnerClass}'`);
 
   console.log('BOTÓN VER MÁS',showMoreButton,spinner);
 
