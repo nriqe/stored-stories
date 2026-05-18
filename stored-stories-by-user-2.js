@@ -8,7 +8,6 @@ const getStoriesByUser = async (
   idShowMoreButton
 ) => {
   const classes = JSON.parse(strClasses);
-  console.log('MAX STORIES: ', maxStories);
 
   // Validación: maxStories no puede ser mayor a 20
   if (maxStories > 20) {
@@ -42,15 +41,11 @@ const getStoriesByUser = async (
   const loadingSpinnerClass = classes.loadingSpinner;
   const spinner = document.querySelector(`.${spinnerClass}`);
 
-  console.log('BOTÓN VER MÁS Y SPINNER', showMoreButton, spinner);
-
   // Estado de paginación
   let storedIdsByUser = [];
   let renderedIds = new Set();
   let currentPage = 0;
-
-  // --- API helpers ---
-
+  
   const getStoriesIdsByUser = async () => {
     const userToken = window?.tp?.pianoId?.getToken() || "";
     const currentTime = new Date().getTime();
@@ -121,13 +116,11 @@ const getStoriesByUser = async (
   };
 
   // --- Loading title helper ---
-
   const hideLoadingTitle = () => {
     if (loadingTitle) loadingTitle.classList.add(loadingTitleHiddenClass);
   };
 
   // --- Spinner y botón helpers ---
-
   const setShowMoreLoading = (isLoading) => {
     if (!showMoreButton) return;
     if (isLoading) {
@@ -138,8 +131,6 @@ const getStoriesByUser = async (
       if (spinner) spinner.classList.remove(loadingSpinnerClass);
     }
   };
-
-  // --- Utilidades ---
 
   const formatDateSmart = (iso) => {
     const date = new Date(iso);
@@ -214,8 +205,6 @@ const getStoriesByUser = async (
       throw new Error("ERROR DE API DE NOTAS DE USUARIO: ", error);
     }
   };
-
-  // --- Render ---
 
   const renderStorySafe = (storedStoriesByUserIds, atFinalPos) => {
     storedStoriesByUserIds.forEach((story) => {
@@ -309,7 +298,6 @@ const getStoriesByUser = async (
   };
 
   // --- Paginación ---
-
   const getIdsForPage = (page) => {
     const start = (page - 1) * maxStories;
     const end = start + maxStories;
@@ -352,7 +340,6 @@ const getStoriesByUser = async (
   };
 
   // --- Inicialización ---
-
   if (window?.tp?.user?.isUserValid()) {
     storedIdsByUser = await getStoriesIdsByUser();
 
