@@ -46,6 +46,7 @@ const validateUser = (params) => {
   }
 
   if (storedStoriesButton && segments.length === 2) {
+    homeButton.disabled = true;
     storedStoriesButton.classList.add(activeButtonClass);
   }
 
@@ -85,9 +86,11 @@ const validateUser = (params) => {
     });
 
     storedStoriesButton.addEventListener("click", () => {
-      homeButton.classList.remove(activeButtonClass);
-      storedStoriesButton.classList.add(activeButtonClass);
-      contentContainer[0].style.display = "none";
+      if(segments.length === 1) {        
+        homeButton.classList.remove(activeButtonClass);
+        storedStoriesButton.classList.add(activeButtonClass);
+        contentContainer[0].style.display = "none";
+      }      
     });
     
   } else {
