@@ -88,6 +88,10 @@ const validateUser = (params) => {
         storedStoriesButton.classList.remove(activeButtonClass);
         contentContainer[0].style.display = getDisplayType();
       }
+      
+      if(isStoredStories) {
+        window.location.href = "/para-ti/";  
+      }
     });
 
     storedStoriesButton.addEventListener("click", () => {
@@ -95,11 +99,7 @@ const validateUser = (params) => {
         homeButton.classList.remove(activeButtonClass);
         storedStoriesButton.classList.add(activeButtonClass);
         contentContainer[0].style.display = "none";
-      }    
-      
-      if(isStoredStories) {
-        window.location.href = "/para-ti/";  
-      }
+      }     
     });
     
   } else {
