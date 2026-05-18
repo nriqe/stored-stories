@@ -191,7 +191,7 @@ const getStoriesByUser = async (
         if (nextId) {
           const newStories = await getStoriesByUserIds([nextId]);
           if (newStories && newStories.length > 0) {
-            renderStorySafe(newStories, true);
+            renderStorySafe(newStories);
           }
         } else if (userStoriesContainer.children.length === 0) {
           emptyStoriesContainer.classList.remove(emptyContainerHiddenClass);
@@ -206,7 +206,7 @@ const getStoriesByUser = async (
     }
   };
 
-  const renderStorySafe = (storedStoriesByUserIds, atFinalPos) => {
+  const renderStorySafe = (storedStoriesByUserIds) => {
     storedStoriesByUserIds.forEach((story) => {
       renderedIds.add(story._id);
 
@@ -287,12 +287,7 @@ const getStoriesByUser = async (
       divStoryContainer.append(divAuthorTimeSection);
       articleContainer.append(divStoryContainer);
 
-      if (atFinalPos) {
-        userStoriesContainer.append(articleContainer);
-        return;
-      }
-
-      userStoriesContainer.prepend(articleContainer);
+      userStoriesContainer.append(articleContainer);
       return;
     });
   };
@@ -359,7 +354,7 @@ const getStoriesByUser = async (
       return;
     }
 
-    renderStorySafe(firstPageStories, true);
+    renderStorySafe(firstPageStories);
     hideLoadingTitle();
 
     // Configurar botón "Ver más": mostrar sólo si hay más páginas
