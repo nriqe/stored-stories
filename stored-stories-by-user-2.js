@@ -232,7 +232,7 @@ const getStoriesByUser = async (
       }
 
       if (story.website_url && story.headline) {
-        const h2StoryTitle = document.createElement("div");
+        const h2StoryTitle = document.createElement("h2");
         h2StoryTitle.className = classes.storyTitle;
 
         const anchorStoryTitle = document.createElement("a");
