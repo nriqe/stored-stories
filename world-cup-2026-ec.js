@@ -55,10 +55,12 @@ const getWorldCupMatches = async (
 
   const getStatusClass = (estado) => {
     const statusMap = {
-      Próximo: classes.nextFixtureCardStatus,
+      Programado: classes.nextFixtureCardStatus,
       "En vivo": classes.liveFixtureCardStatus,
       "1er Tiempo": classes.liveFixtureCardStatus,
       "2do Tiempo": classes.liveFixtureCardStatus,
+      "1er Tiempo Extra": classes.liveFixtureCardStatus,
+      "2do Tiempo Extra": classes.liveFixtureCardStatus,
       "Medio Tiempo": classes.liveFixtureCardStatus,
       Penales: classes.liveFixtureCardStatus,
       Finalizado: classes.finishedFixtureCardStatus,
@@ -68,7 +70,7 @@ const getWorldCupMatches = async (
 
   const getStatus = (estado) => {
     const statusMap = {
-      Próximo: "Programado",
+      Programado: "Próximo",
       "En vivo": "En vivo",
       "1er Tiempo": "En vivo",
       "2do Tiempo": "En vivo",
