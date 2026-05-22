@@ -60,7 +60,21 @@ const getWorldCupMatches = async (
       "1er Tiempo": classes.liveFixtureCardStatus,
       "2do Tiempo": classes.liveFixtureCardStatus,
       "Medio Tiempo": classes.liveFixtureCardStatus,
+      Penales: classes.liveFixtureCardStatus,
       Finalizado: classes.finishedFixtureCardStatus,
+    };
+    return statusMap[estado] ?? classes.nextFixtureCardStatus;
+  };
+
+  const getStatus = (estado) => {
+    const statusMap = {
+      Próximo: "Programado",
+      "En vivo": "En vivo",
+      "1er Tiempo": "En vivo",
+      "2do Tiempo": "En vivo",
+      "Medio Tiempo": "En vivo",
+      Penales: "En vivo",
+      Finalizado: "Finalizado",
     };
     return statusMap[estado] ?? classes.nextFixtureCardStatus;
   };
@@ -92,7 +106,7 @@ const getWorldCupMatches = async (
         <span class="${classes.fixtureCardStatus} ${getStatusClass(
       match.estado
     )}">
-          ${match.estado}
+          ${getStatus(match.estado)}
         </span>
       </header>
       <section class="${classes.teamsContainer}">
