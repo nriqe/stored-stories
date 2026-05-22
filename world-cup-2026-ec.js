@@ -15,7 +15,7 @@ const getWorldCupMatches = async (
   const cardCounter = document.getElementById(idCardCounter);
 
   const finishedState = "Finalizado";
-  const nextMatchState = "Programado";
+  const nextMatchState = "Pŕoximo";
 
   if (
     !matchesContainer ||
@@ -58,7 +58,7 @@ const getWorldCupMatches = async (
 
   const getStatusClass = (estado) => {
     const statusMap = {
-      Programado: classes.nextFixtureCardStatus,
+      Próximo: classes.nextFixtureCardStatus,
       "En vivo": classes.liveFixtureCardStatus,
       "1er Tiempo": classes.liveFixtureCardStatus,
       "2do Tiempo": classes.liveFixtureCardStatus,
@@ -73,7 +73,7 @@ const getWorldCupMatches = async (
 
   const getStatus = (estado) => {
     const statusMap = {
-      Programado: nextMatchState,
+      Próximo: nextMatchState,
       "En vivo": "En vivo",
       "1er Tiempo": "En vivo",
       "2do Tiempo": "En vivo",
@@ -81,7 +81,7 @@ const getWorldCupMatches = async (
       Penales: "En vivo",
       Finalizado: finishedState,
     };
-    return statusMap[estado] ?? classes.nextFixtureCardStatus;
+    return statusMap[estado] ?? nextMatchState;
   };
 
   const isFinished = (estado) => estado === finishedState;
