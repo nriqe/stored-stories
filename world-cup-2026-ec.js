@@ -93,6 +93,9 @@ const getWorldCupMatches = async (
 
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
 
+  const getCalendarIcon = (estado) =>
+    !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
+
   const renderMatch = (match) => {
     const article = document.createElement("article");
     article.className = `${classes.fixtureCard} ${
@@ -144,8 +147,8 @@ const getWorldCupMatches = async (
         </div>
       </section>
       <footer class="${classes.cardBottom}">
-        <div class="${classes.calendarTime}">
-          <div class="${classes.calendarIcon}"></div>
+        <div class="${classes.calendarTime}">          
+          ${getCalendarIcon(match.estado)}
           <span class="${classes.time}">${match.horaLima} EST</span>
         </div>
         <span class="${classes.stadium}">${match.sede}</span>
