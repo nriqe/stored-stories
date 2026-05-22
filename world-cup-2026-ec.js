@@ -89,7 +89,7 @@ const getWorldCupMatches = async (
         <span class="${classes.fixtureCardGroup}">Grupo ${
       match.grupo
     } • ${formatDate(match.fecha)}</span>
-        <span class="${classes.fixtureCardTopHeader} ${getStatusClass(
+        <span class="${classes.fixtureCardStatus} ${getStatusClass(
       match.estado
     )}">
           ${match.estado}
