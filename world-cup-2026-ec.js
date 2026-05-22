@@ -21,15 +21,7 @@ const getWorldCupMatches = async (
     const currentTime = new Date().getTime();
 
     try {
-      const response = await fetch(`${jsonPath}?${currentTime}`,
-        {
-          method: "GET",
-          cache: "no-store",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${jsonPath}?${currentTime}`);
 
       /*if (
         !response.status ||
