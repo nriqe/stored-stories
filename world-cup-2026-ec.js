@@ -6,7 +6,10 @@ const getWorldCupMatches = async (
   strClasses,
   jsonPath
 ) => {
+
   const classes = JSON.parse(strClasses);
+  const successfullResponse = 200;
+
   console.log(
     "PROBANDO JS MUNDIAL:",
     idMatchesContainer,
@@ -23,19 +26,19 @@ const getWorldCupMatches = async (
     try {
       const response = await fetch(`${jsonPath}?${currentTime}`);
 
-      /*if (
+      if (
         !response.status ||
         response.status !== successfullResponse ||
         !response.ok
       ) {
-        throw new Error("Error al obtener las notas de usuario.");
-      }*/
+        throw new Error("Error al obtener los partidos.");
+      }
 
       const result = await response.json();
       console.log('PARTIDOS DESDE EL JSON:',response,result);
       return result;
     } catch (error) {
-      throw new Error("ERROR AL TRAER LOS PARTIDOS: ", error);
+      throw new Error("ERROR DE API LOS PARTIDOS: ", error);
     }
   };
 
