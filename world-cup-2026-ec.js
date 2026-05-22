@@ -10,15 +10,16 @@ const getWorldCupMatches = async (
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
 
-  console.log(
-    "PROBANDO JS MUNDIAL:",
-    idMatchesContainer,
-    classes,
-    idCarouselBtnPrev,
-    idCarouselBtnNext,
-    idCardCounter,
-    jsonPath
-  );
+  const matchesContainer = document.getElementById(idMatchesContainer);
+  const carouselBtnPrev = document.getElementById(idCarouselBtnPrev);
+  const carouselBtnNext = document.getElementById(idCarouselBtnNext);
+  const cardCounter = document.getElementById(idCardCounter);
+
+  if(!matchesContainer || !carouselBtnPrev || !carouselBtnNext || !cardCounter){
+    throw new Error("No existe uno de los contenedores.");
+  }
+
+  let matches = [];
 
   const getWorldCupMatchesFromApi = async () => {
     const currentTime = new Date().getTime();
@@ -42,5 +43,5 @@ const getWorldCupMatches = async (
     }
   };
 
-  await getWorldCupMatchesFromApi();
+  matches = await getWorldCupMatchesFromApi();
 };
