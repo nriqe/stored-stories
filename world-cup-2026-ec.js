@@ -14,31 +14,6 @@ const getWorldCupMatches = async (
   const carouselBtnNext = document.getElementById(idCarouselBtnNext);
   const cardCounter = document.getElementById(idCardCounter);
 
-  /**
-   * fixtureCard: 'fixture-card',
-  fixtureCardSkeleton: 'fixture-card--skeleton',
-  fixtureCardTopHeader: 'fixture-card__top',
-  fixtureCardGroup: 'fixture-card__group',
-  finishedFixtureCardGroup: 'fixture-card__top--finished',
-  fixtureCardStatus: 'fixture-card__status',
-  liveFixtureCardStatus: 'fixture-card__status--live',
-  nextFixtureCardStatus: 'fixture-card__status--next',
-  finishedFixtureCardStatus: 'fixture-card__status--finished',
-  group: 'fixture-card__group',
-  teamsContainer: 'fixture-card__teams',
-  team: 'fixture-card__team',
-  teamInfo: 'fixture-card__team-info',
-  flag: 'fixture-card__flag',
-  teamName: 'fixture-card__team-name',
-  teamScore: 'fixture-card__team-score',
-  score: 'fixture-card__score',
-  cardBottom: 'fixture-card__bottom',
-  calendarTime: 'fixture-card__calendar-time',
-  calendarIcon: 'fixture-card__calendar',
-  time: 'fixture-card__time',
-  stadium: 'fixture-card__stadium',
-   */
-
   if (
     !matchesContainer ||
     !carouselBtnPrev ||
@@ -104,13 +79,19 @@ const getWorldCupMatches = async (
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
-    article.className = classes.fixtureCard;
+    article.className = `${classes.fixtureCard} ${
+      isFinished(match.estado) ? classes.fixturefinishedCard : ""
+    }`;
     article.dataset.id = match.iD;
 
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
-        <span class="${classes.fixtureCardGroup}">Grupo ${match.grupo} • ${formatDate(match.fecha)}</span>
-        <span class="${classes.fixtureCardTopHeader} ${getStatusClass(match.estado)}">
+        <span class="${classes.fixtureCardGroup}">Grupo ${
+      match.grupo
+    } • ${formatDate(match.fecha)}</span>
+        <span class="${classes.fixtureCardTopHeader} ${getStatusClass(
+      match.estado
+    )}">
           ${match.estado}
         </span>
       </header>
