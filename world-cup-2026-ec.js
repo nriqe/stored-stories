@@ -15,7 +15,7 @@ const getWorldCupMatches = async (
   const cardCounter = document.getElementById(idCardCounter);
 
   const finishedState = "Finalizado";
-  const nextMatchState = "Pŕoximo";
+  const nextMatchState = "Próximo";
 
   if (
     !matchesContainer ||
@@ -175,6 +175,6 @@ const getWorldCupMatches = async (
   matches = await getWorldCupMatchesFromApi();
 
   if (matches?.length > 0) {
-    renderMatches(matches.slice(0, 6));
+    renderMatches(matches.slice(0, 12));
   }
 };
