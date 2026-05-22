@@ -127,7 +127,7 @@ const getWorldCupMatches = async (
             </span>
           </div>
         </div>
-        <div class="${classes.teamsContainer}">
+        <div class="${classes.team}">
           <div class="${classes.teamInfo}">
             <img
               class="${classes.flag}"
