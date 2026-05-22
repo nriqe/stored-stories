@@ -32,7 +32,7 @@ const getWorldCupMatches = async (
       }*/
 
       const result = await response.json();
-      console.log('PARTIDOS DESDE EL JSON:',result);
+      console.log('PARTIDOS DESDE EL JSON:',response,result);
       return result;
     } catch (error) {
       throw new Error("ERROR AL TRAER LOS PARTIDOS: ", error);
