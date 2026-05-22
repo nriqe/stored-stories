@@ -87,9 +87,7 @@ const getWorldCupMatches = async (
   const isNext = (estado) => estado === "Próximo";
 
   const getScoreClass = (estado) =>
-    isNext(estado)
-      ? "fixture-card__score--empty"
-      : "fixture-card__score--filled";
+    isNext(estado) ? "fixture-card__score--empty" : "";
 
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
 
