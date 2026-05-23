@@ -16,6 +16,9 @@ const getWorldCupMatches = async (
 
   const finishedState = "Finalizado";
   const nextMatchState = "Próximo";
+  const DESKTOP_BREAKPOINT = 640;
+  const DESKTOP_STEP = 3;
+  const MOBILE_STEP = 1;
 
   if (
     !matchesContainer ||
@@ -27,13 +30,12 @@ const getWorldCupMatches = async (
   }
 
   let matches = [];
+  let currentIndex = 0;
 
   const getWorldCupMatchesFromApi = async () => {
     const currentTime = new Date().getTime();
-
     try {
       const response = await fetch(`${jsonPath}?${currentTime}`);
-
       if (
         !response.status ||
         response.status !== successfullResponse ||
@@ -41,7 +43,6 @@ const getWorldCupMatches = async (
       ) {
         throw new Error("Error al obtener los partidos.");
       }
-
       const result = await response.json();
       console.log("PARTIDOS DESDE EL JSON:", response, result);
       return result;
@@ -91,12 +92,9 @@ const getWorldCupMatches = async (
 
   const getScoreClass = (estado) =>
     isNext(estado) ? "fixture-card__score--empty" : "";
-
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
-
   const getCalendarIcon = (estado) =>
     !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
-
   const getMatchTime = (estado, matchTime) =>
     !isFinished(estado) ? `${matchTime} EST` : "FT";
 
@@ -121,11 +119,9 @@ const getWorldCupMatches = async (
       <section class="${classes.teamsContainer}">
         <div class="${classes.team}">
           <div class="${classes.teamInfo}">
-            <img
-              class="${classes.flag}"
-              src="./flags/${match.slugSeleccion1}.png"
-              alt="${match.seleccion1}"
-            />
+            <img class="${classes.flag}" src="./flags/${
+      match.slugSeleccion1
+    }.png" alt="${match.seleccion1}" />
             <span class="${classes.teamName}">${match.seleccion1}</span>
           </div>
           <div class="${classes.teamScore}">
@@ -136,11 +132,9 @@ const getWorldCupMatches = async (
         </div>
         <div class="${classes.team}">
           <div class="${classes.teamInfo}">
-            <img
-              class="${classes.flag}"
-              src="./flags/${match.slugSeleccion2}.png"
-              alt="${match.seleccion2}"
-            />
+            <img class="${classes.flag}" src="./flags/${
+      match.slugSeleccion2
+    }.png" alt="${match.seleccion2}" />
             <span class="${classes.teamName}">${match.seleccion2}</span>
           </div>
           <div class="${classes.teamScore}">
@@ -153,14 +147,14 @@ const getWorldCupMatches = async (
       <footer class="${classes.cardBottom}">
         <div class="${classes.calendarTime}">
           ${getCalendarIcon(match.estado)}
-          <span class="${classes.time}">
-            ${getMatchTime(match.estado, match.horaLima)}
-          </span>
+          <span class="${classes.time}">${getMatchTime(
+      match.estado,
+      match.horaLima
+    )}</span>
         </div>
         <span class="${classes.stadium}">${match.sede}</span>
       </footer>
     `;
-
     return article;
   };
 
@@ -171,54 +165,58 @@ const getWorldCupMatches = async (
     matchesContainer.appendChild(fragment);
   };
 
-  // ── Carousel ────────────────────────────────────────────────────────────────
-
-  const CARD_WIDTH = 320; // px — ancho de cada fixture-card
-  const DESKTOP_STEP = 3;
-  const MOBILE_STEP = 1;
-  const DESKTOP_BREAKPOINT = 640; // px
+  // ── Carousel ─────────────────────────────────────────────────────────────
 
   const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
   const getStep = () => (isDesktop() ? DESKTOP_STEP : MOBILE_STEP);
 
-  let currentIndex = 0; // índice de la primera tarjeta visible
+  // Obtiene el ancho real de una tarjeta + su gap desde el DOM
+  const getCardStride = () => {
+    const firstCard = matchesContainer.firstElementChild;
+    if (!firstCard) return 0;
+
+    // offsetWidth de la tarjeta + gap calculado desde el estilo computado del contenedor
+    const gap = parseFloat(getComputedStyle(matchesContainer).gap) || 0;
+    return firstCard.offsetWidth + gap;
+  };
 
   const updateCarousel = (total) => {
+    const stride = getCardStride();
     const step = getStep();
+    const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
 
-    // Desplazamiento: cada tarjeta ocupa CARD_WIDTH px
-    const offset = currentIndex * CARD_WIDTH;
-    matchesContainer.style.transform = `translateX(-${offset}px)`;
+    matchesContainer.style.transform = `translateX(-${
+      currentIndex * stride
+    }px)`;
 
-    // Botón prev: oculto en el inicio
+    // Botón prev
     carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
 
-    // Botón next: oculto cuando ya no quedan tarjetas por mostrar
-    const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+    // Botón next
     carouselBtnNext.style.display =
       currentIndex + visibleCount >= total ? "none" : "";
 
-    // Contador — siempre de 1 en 1 (índice visual = currentIndex + 1)
+    // Contador (siempre de 1 en 1)
     cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
   };
 
   const initCarousel = (matchList) => {
     const total = matchList.length;
 
-    // El contenedor debe ser flex y no recortar para que el translate funcione;
-    // aseguramos el ancho mínimo para albergar todas las tarjetas.
-    matchesContainer.style.display = "flex";
+    currentIndex = 0;
+    carouselBtnPrev.style.display = "none";
+
+    // El contenedor ya tiene overflow:hidden en .wc-fixtures__content (padre)
+    // Solo necesitamos que el carrusel no haga scroll nativo
+    matchesContainer.style.overflow = "visible";
     matchesContainer.style.transition = "transform 0.35s ease";
     matchesContainer.style.willChange = "transform";
 
-    // Estado inicial
-    currentIndex = 0;
-    carouselBtnPrev.style.display = "none";
     updateCarousel(total);
 
     carouselBtnNext.addEventListener("click", () => {
-      const step = getStep();
       const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+      const step = getStep();
       if (currentIndex + visibleCount < total) {
         currentIndex = Math.min(currentIndex + step, total - visibleCount);
         updateCarousel(total);
@@ -233,14 +231,13 @@ const getWorldCupMatches = async (
       }
     });
 
-    // Recalcula al cambiar tamaño de ventana (desktop ↔ móvil)
     window.addEventListener("resize", () => {
       currentIndex = 0;
       updateCarousel(total);
     });
   };
 
-  // ── Init ────────────────────────────────────────────────────────────────────
+  // ── Init ──────────────────────────────────────────────────────────────────
 
   matches = await getWorldCupMatchesFromApi();
 
