@@ -53,7 +53,9 @@ const getWorldCupMatches = async (
   const formatDate = (fechaStr) => {
     const [year, month, day] = fechaStr.split("-");
     const date = new Date(year, month - 1, day);
-    return date.toLocaleDateString("es-PE", { day: "numeric", month: "short" });
+    return date
+      .toLocaleDateString("es-PE", { day: "numeric", month: "short" })
+      .replace(".", "");
   };
 
   const getStatusClass = (estado) => {
@@ -85,8 +87,6 @@ const getWorldCupMatches = async (
   };
 
   const isFinished = (estado) => estado === finishedState;
-  const isLive = (estado) =>
-    ["En vivo", "1er Tiempo", "2do Tiempo", "Medio Tiempo"].includes(estado);
   const isNext = (estado) => estado === nextMatchState;
 
   const getScoreClass = (estado) =>
@@ -109,9 +109,9 @@ const getWorldCupMatches = async (
 
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
-        <span class="${classes.fixtureCardGroup}">Grupo ${
-      match.grupo
-    } • ${formatDate(match.fecha)}</span>
+        <span class="${classes.fixtureCardGroup}">
+          Grupo ${match.grupo} • ${formatDate(match.fecha)}
+        </span>
         <span class="${classes.fixtureCardStatus} ${getStatusClass(
       match.estado
     )}">
@@ -151,7 +151,7 @@ const getWorldCupMatches = async (
         </div>
       </section>
       <footer class="${classes.cardBottom}">
-        <div class="${classes.calendarTime}">          
+        <div class="${classes.calendarTime}">
           ${getCalendarIcon(match.estado)}
           <span class="${classes.time}">
             ${getMatchTime(match.estado, match.horaLima)}
@@ -164,17 +164,88 @@ const getWorldCupMatches = async (
     return article;
   };
 
-  const renderMatches = (matches) => {
+  const renderMatches = (matchList) => {
     matchesContainer.innerHTML = "";
-
     const fragment = document.createDocumentFragment();
-    matches.forEach((match) => fragment.appendChild(renderMatch(match)));
+    matchList.forEach((match) => fragment.appendChild(renderMatch(match)));
     matchesContainer.appendChild(fragment);
   };
+
+  // ── Carousel ────────────────────────────────────────────────────────────────
+
+  const CARD_WIDTH = 320; // px — ancho de cada fixture-card
+  const DESKTOP_STEP = 3;
+  const MOBILE_STEP = 1;
+  const DESKTOP_BREAKPOINT = 640; // px
+
+  const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
+  const getStep = () => (isDesktop() ? DESKTOP_STEP : MOBILE_STEP);
+
+  let currentIndex = 0; // índice de la primera tarjeta visible
+
+  const updateCarousel = (total) => {
+    const step = getStep();
+
+    // Desplazamiento: cada tarjeta ocupa CARD_WIDTH px
+    const offset = currentIndex * CARD_WIDTH;
+    matchesContainer.style.transform = `translateX(-${offset}px)`;
+
+    // Botón prev: oculto en el inicio
+    carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
+
+    // Botón next: oculto cuando ya no quedan tarjetas por mostrar
+    const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+    carouselBtnNext.style.display =
+      currentIndex + visibleCount >= total ? "none" : "";
+
+    // Contador — siempre de 1 en 1 (índice visual = currentIndex + 1)
+    cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
+  };
+
+  const initCarousel = (matchList) => {
+    const total = matchList.length;
+
+    // El contenedor debe ser flex y no recortar para que el translate funcione;
+    // aseguramos el ancho mínimo para albergar todas las tarjetas.
+    matchesContainer.style.display = "flex";
+    matchesContainer.style.transition = "transform 0.35s ease";
+    matchesContainer.style.willChange = "transform";
+
+    // Estado inicial
+    currentIndex = 0;
+    carouselBtnPrev.style.display = "none";
+    updateCarousel(total);
+
+    carouselBtnNext.addEventListener("click", () => {
+      const step = getStep();
+      const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+      if (currentIndex + visibleCount < total) {
+        currentIndex = Math.min(currentIndex + step, total - visibleCount);
+        updateCarousel(total);
+      }
+    });
+
+    carouselBtnPrev.addEventListener("click", () => {
+      const step = getStep();
+      if (currentIndex > 0) {
+        currentIndex = Math.max(currentIndex - step, 0);
+        updateCarousel(total);
+      }
+    });
+
+    // Recalcula al cambiar tamaño de ventana (desktop ↔ móvil)
+    window.addEventListener("resize", () => {
+      currentIndex = 0;
+      updateCarousel(total);
+    });
+  };
+
+  // ── Init ────────────────────────────────────────────────────────────────────
 
   matches = await getWorldCupMatchesFromApi();
 
   if (matches?.length > 0) {
-    renderMatches(matches.slice(0, 12));
+    renderMatches(matches);
+    initCarousel(matches);
   }
 };
