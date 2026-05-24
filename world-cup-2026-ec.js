@@ -22,9 +22,18 @@ const getWorldCupMatches = async (
 
   const finishedState = "Finalizado";
   const nextMatchState = "Próximo";
-  const DESKTOP_BREAKPOINT = 640;
-  const DESKTOP_STEP = 3;
+
+  const MOBILE_BREAKPOINT = 640; // < 640px
+  const TABLET_BREAKPOINT = 1024; // 640px – 1023px
+  // desktop                         // >= 1024px
+
   const MOBILE_STEP = 1;
+  const TABLET_STEP = 2;
+  const DESKTOP_STEP = 2;
+
+  const MOBILE_VISIBLE = 1;
+  const TABLET_VISIBLE = 2;
+  const DESKTOP_VISIBLE = 3;
 
   if (
     !matchesContainer ||
@@ -171,38 +180,49 @@ const getWorldCupMatches = async (
     matchesContainer.appendChild(fragment);
   };
 
-  // ── Carousel ─────────────────────────────────────────────────────────────
+  // ── Breakpoint helpers ────────────────────────────────────────────────────
 
-  const isDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
-  const getStep = () => (isDesktop() ? DESKTOP_STEP : MOBILE_STEP);
+  const isMobile = () => window.innerWidth < MOBILE_BREAKPOINT;
+  const isTablet = () =>
+    window.innerWidth >= MOBILE_BREAKPOINT &&
+    window.innerWidth < TABLET_BREAKPOINT;
+  const isDesktop = () => window.innerWidth >= TABLET_BREAKPOINT;
 
-  // Obtiene el ancho real de una tarjeta + su gap desde el DOM
+  const getStep = () => {
+    if (isMobile()) return MOBILE_STEP;
+    if (isTablet()) return TABLET_STEP;
+    return DESKTOP_STEP;
+  };
+
+  const getVisibleCount = () => {
+    if (isMobile()) return MOBILE_VISIBLE;
+    if (isTablet()) return TABLET_VISIBLE;
+    return DESKTOP_VISIBLE;
+  };
+
+  // ── Carousel ──────────────────────────────────────────────────────────────
+
   const getCardStride = () => {
     const firstCard = matchesContainer.firstElementChild;
     if (!firstCard) return 0;
-
-    // offsetWidth de la tarjeta + gap calculado desde el estilo computado del contenedor
     const gap = parseFloat(getComputedStyle(matchesContainer).gap) || 0;
     return firstCard.offsetWidth + gap;
   };
 
   const updateCarousel = (total) => {
     const stride = getCardStride();
-    const step = getStep();
-    const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+    const visibleCount = getVisibleCount();
 
     matchesContainer.style.transform = `translateX(-${
       currentIndex * stride
     }px)`;
 
-    // Botón prev
     carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
 
-    // Botón next
     carouselBtnNext.style.display =
       currentIndex + visibleCount >= total ? "none" : "";
 
-    // Contador (siempre de 1 en 1)
+    // Contador: siempre de 1 en 1
     cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
   };
 
@@ -213,8 +233,6 @@ const getWorldCupMatches = async (
     carouselBtnsContainer.classList.remove(hiddenArrowsClass);
     carouselBtnPrev.style.display = "none";
 
-    // El contenedor ya tiene overflow:hidden en .wc-fixtures__content (padre)
-    // Solo necesitamos que el carrusel no haga scroll nativo
     matchesContainer.style.overflow = "visible";
     matchesContainer.style.transition = "transform 0.35s ease";
     matchesContainer.style.willChange = "transform";
@@ -222,7 +240,7 @@ const getWorldCupMatches = async (
     updateCarousel(total);
 
     carouselBtnNext.addEventListener("click", () => {
-      const visibleCount = isDesktop() ? DESKTOP_STEP : MOBILE_STEP;
+      const visibleCount = getVisibleCount();
       const step = getStep();
       if (currentIndex + visibleCount < total) {
         currentIndex = Math.min(currentIndex + step, total - visibleCount);
