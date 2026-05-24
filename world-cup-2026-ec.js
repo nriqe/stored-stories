@@ -93,7 +93,7 @@ const getWorldCupMatches = async (
       .replace(".", "");
   };
 
-  const getCardTitle = (score, matchGroup, matchDate) => {
+  const getCardTitle = (matchGroup, matchDate) => {
     if (score === roundStage || typeof matchGroup !== "") {
       return `Grupo ${matchGroup} • ${formatDate(matchDate)}`;
     }
