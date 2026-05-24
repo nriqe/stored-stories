@@ -105,6 +105,9 @@ const getWorldCupMatches = async (
   const isFinished = (estado) => estado === finishedState;
   const isNext = (estado) => estado === nextMatchState;
 
+  const getFlagPath = (slugTeam) =>
+    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+
   const getScoreClass = (estado) =>
     isNext(estado) ? "fixture-card__score--empty" : "";
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
@@ -134,9 +137,9 @@ const getWorldCupMatches = async (
       <section class="${classes.teamsContainer}">
         <div class="${classes.team}">
           <div class="${classes.teamInfo}">
-            <img class="${classes.flag}" src="./flags/${
+            <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion1
-    }.png" alt="${match.seleccion1}" />
+    )}.png" alt="${match.seleccion1}" />
             <span class="${classes.teamName}">${match.seleccion1}</span>
           </div>
           <div class="${classes.teamScore}">
@@ -147,9 +150,9 @@ const getWorldCupMatches = async (
         </div>
         <div class="${classes.team}">
           <div class="${classes.teamInfo}">
-            <img class="${classes.flag}" src="./flags/${
+            <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion2
-    }.png" alt="${match.seleccion2}" />
+    )}.png" alt="${match.seleccion2}" />
             <span class="${classes.teamName}">${match.seleccion2}</span>
           </div>
           <div class="${classes.teamScore}">
