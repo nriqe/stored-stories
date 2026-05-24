@@ -124,9 +124,7 @@ const getWorldCupMatches = async (
       (estado === penaltiesState || estado === finishedState) &&
       penales !== ""
     ) {
-      penaltiesScore = `<span class="${classes.score} ${getScoreClass(
-        match.estado
-      )}">
+      penaltiesScore = `<span class="${classes.score} ${getScoreClass(estado)}">
              (${penales})
             </span>`;
     }
