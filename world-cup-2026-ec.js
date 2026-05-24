@@ -20,8 +20,9 @@ const getWorldCupMatches = async (
 
   const hiddenArrowsClass = classes.hiddenArrows;
 
-  const finishedState = "Finalizado";
   const nextMatchState = "Próximo";
+  const penaltiesState = "Penales";
+  const finishedState = "Finalizado";
 
   const MOBILE_BREAKPOINT = 640; // < 640px
   const TABLET_BREAKPOINT = 1024; // 640px – 1023px
@@ -116,6 +117,21 @@ const getWorldCupMatches = async (
   const getMatchTime = (estado, matchTime) =>
     !isFinished(estado) ? `${matchTime} EST` : "FT";
 
+  const getPenalties = (estado, penales) => {
+    let penaltiesScore = "";
+
+    if (
+      (estado === penaltiesState || estado === finishedState) &&
+      penales !== ""
+    ) {
+      penaltiesScore = `<span class="${classes.score} ${getScoreClass(
+        match.estado
+      )}">
+             (${penales})
+            </span>`;
+    }
+  };
+
   const renderMatch = (match) => {
     const article = document.createElement("article");
     article.className = `${classes.fixtureCard} ${
@@ -139,26 +155,28 @@ const getWorldCupMatches = async (
           <div class="${classes.teamInfo}">
             <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion1
-    )}" alt="${match.seleccion1}" />
+    )}" alt="${match.seleccion1}" loading="lazy" />
             <span class="${classes.teamName}">${match.seleccion1}</span>
           </div>
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles1, match.estado)}
             </span>
+            ${getPenalties(match.estado, match.pen1)}
           </div>
         </div>
         <div class="${classes.team}">
           <div class="${classes.teamInfo}">
             <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion2
-    )}" alt="${match.seleccion2}" />
+    )}" alt="${match.seleccion2}" loading="lazy" />
             <span class="${classes.teamName}">${match.seleccion2}</span>
           </div>
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles2, match.estado)}
             </span>
+            ${getPenalties(match.estado, match.pen2)}
           </div>
         </div>
       </section>
