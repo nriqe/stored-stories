@@ -139,7 +139,7 @@ const getWorldCupMatches = async (
           <div class="${classes.teamInfo}">
             <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion1
-    )}.png" alt="${match.seleccion1}" />
+    )}" alt="${match.seleccion1}" />
             <span class="${classes.teamName}">${match.seleccion1}</span>
           </div>
           <div class="${classes.teamScore}">
@@ -152,7 +152,7 @@ const getWorldCupMatches = async (
           <div class="${classes.teamInfo}">
             <img class="${classes.flag}" src="${getFlagPath(
       match.slugSeleccion2
-    )}.png" alt="${match.seleccion2}" />
+    )}" alt="${match.seleccion2}" />
             <span class="${classes.teamName}">${match.seleccion2}</span>
           </div>
           <div class="${classes.teamScore}">
