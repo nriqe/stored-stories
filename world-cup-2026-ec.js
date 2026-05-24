@@ -4,6 +4,7 @@ const getWorldCupMatches = async (
   idCarouselBtnPrev,
   idCarouselBtnNext,
   idCardCounter,
+  round,
   strClasses,
   jsonPath
 ) => {
@@ -47,6 +48,22 @@ const getWorldCupMatches = async (
 
   let matches = [];
   let currentIndex = 0;
+
+  const getRound = (round) => {
+    const rounds = {
+      "fase-de-grupos": "Fase de grupos",
+      "16vos-final": "16vos de final",
+      "8vos-final": "8vos de final",
+      "4tos-final": "4tos de final",
+      semifinales: "Semifinales",
+      "3-4-puesto": "3er y 4to puesto",
+      final: "final",
+    };
+
+    return rounds[round];
+  };
+
+  console.log("FASE:", getRound(round));
 
   const getWorldCupMatchesFromApi = async () => {
     const currentTime = new Date().getTime();
