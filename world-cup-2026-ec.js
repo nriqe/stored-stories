@@ -1,5 +1,3 @@
-const { group } = require("console");
-
 const getWorldCupMatches = async (
   idMatchesContainer,
   idCarouselBtnsContainer,
