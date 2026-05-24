@@ -1,5 +1,6 @@
 const getWorldCupMatches = async (
   idMatchesContainer,
+  idCarouselBtnsContainer,
   idCarouselBtnPrev,
   idCarouselBtnNext,
   idCardCounter,
@@ -10,9 +11,14 @@ const getWorldCupMatches = async (
   const successfullResponse = 200;
 
   const matchesContainer = document.getElementById(idMatchesContainer);
+  const carouselBtnsContainer = document.getElementById(
+    idCarouselBtnsContainer
+  );
   const carouselBtnPrev = document.getElementById(idCarouselBtnPrev);
   const carouselBtnNext = document.getElementById(idCarouselBtnNext);
   const cardCounter = document.getElementById(idCardCounter);
+
+  const hiddenArrowsClass = classes.hiddenArrows;
 
   const finishedState = "Finalizado";
   const nextMatchState = "Próximo";
@@ -204,6 +210,7 @@ const getWorldCupMatches = async (
     const total = matchList.length;
 
     currentIndex = 0;
+    carouselBtnsContainer.classList.remove(hiddenArrowsClass);
     carouselBtnPrev.style.display = "none";
 
     // El contenedor ya tiene overflow:hidden en .wc-fixtures__content (padre)
