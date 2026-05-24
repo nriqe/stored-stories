@@ -60,7 +60,7 @@ const getWorldCupMatches = async (
       final: "final",
     };
 
-    return rounds[round];
+    return rounds[round] ? rounds[round] : "";
   };
 
   console.log("FASE:", getRound(round));
