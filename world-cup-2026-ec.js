@@ -60,7 +60,6 @@ const getWorldCupMatches = async (
         throw new Error("Error al obtener los partidos.");
       }
       const result = await response.json();
-      console.log("PARTIDOS DESDE EL JSON:", response, result);
       return result;
     } catch (error) {
       throw new Error("ERROR DE API LOS PARTIDOS: ", error);
@@ -128,6 +127,8 @@ const getWorldCupMatches = async (
              (${penales})
             </span>`;
     }
+
+    return penaltiesScore;
   };
 
   const renderMatch = (match) => {
