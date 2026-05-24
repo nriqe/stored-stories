@@ -189,7 +189,7 @@ const getWorldCupMatches = async (
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles1, match.estado)}
             </span>
-            ${getPenalties(match.estado, match.pen1)}
+            ${getPenalties(match.estado, match.pen1 ?? "")}
           </div>
         </div>
         <div class="${classes.team}">
@@ -203,7 +203,7 @@ const getWorldCupMatches = async (
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles2, match.estado)}
             </span>
-            ${getPenalties(match.estado, match.pen2)}
+            ${getPenalties(match.estado, match.pen2 ?? "")}
           </div>
         </div>
       </section>
