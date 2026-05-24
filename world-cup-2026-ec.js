@@ -1,3 +1,5 @@
+const { group } = require("console");
+
 const getWorldCupMatches = async (
   idMatchesContainer,
   idCarouselBtnsContainer,
@@ -20,6 +22,8 @@ const getWorldCupMatches = async (
   const cardCounter = document.getElementById(idCardCounter);
 
   const hiddenArrowsClass = classes.hiddenArrows;
+
+  const roundStage = "fase-de-grupos";
 
   const nextMatchState = "Próximo";
   const penaltiesState = "Penales";
@@ -51,13 +55,13 @@ const getWorldCupMatches = async (
 
   const getRound = (round) => {
     const rounds = {
-      "fase-de-grupos": "Fase de grupos",
+      "fase-de-grupos": "Grupo",
       "16vos-final": "16vos de final",
       "8vos-final": "8vos de final",
       "4tos-final": "4tos de final",
       semifinales: "Semifinales",
       "3-4-puesto": "3er y 4to puesto",
-      final: "final",
+      final: "Final",
     };
 
     return rounds[round] ? rounds[round] : "";
@@ -89,6 +93,14 @@ const getWorldCupMatches = async (
     return date
       .toLocaleDateString("es-PE", { day: "numeric", month: "short" })
       .replace(".", "");
+  };
+
+  const getCardTitle = (score, matchGroup, matchDate) => {
+    if (score === roundStage || typeof matchGroup !== "") {
+      return `Grupo ${matchGroup} • ${formatDate(matchDate)}`;
+    }
+
+    return rounds[round];
   };
 
   const getStatusClass = (estado) => {
@@ -127,8 +139,7 @@ const getWorldCupMatches = async (
   const getFlagPath = (slugTeam) =>
     `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
 
-  const getScoreClass = (estado) =>
-    isNext(estado) ? "fixture-card__score--empty" : "";
+  const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
   const getCalendarIcon = (estado) =>
     !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
@@ -160,7 +171,7 @@ const getWorldCupMatches = async (
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
         <span class="${classes.fixtureCardGroup}">
-          Grupo ${match.grupo} • ${formatDate(match.fecha)}
+          ${getCardTitle(match.grupo ?? "", match.fecha)}
         </span>
         <span class="${classes.fixtureCardStatus} ${getStatusClass(
       match.estado
