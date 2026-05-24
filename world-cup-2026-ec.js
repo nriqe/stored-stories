@@ -95,6 +95,8 @@ const getWorldCupMatches = async (
       "En vivo": "En vivo",
       "1er Tiempo": "En vivo",
       "2do Tiempo": "En vivo",
+      "1er Tiempo Extra": "En vivo",
+      "2do Tiempo Extra": "En vivo",
       "Medio Tiempo": "En vivo",
       Penales: "En vivo",
       Finalizado: finishedState,
