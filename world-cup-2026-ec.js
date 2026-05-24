@@ -94,11 +94,12 @@ const getWorldCupMatches = async (
   };
 
   const getCardTitle = (matchGroup, matchDate) => {
-    if (round === roundStage && matchGroup !== "") {
-      return `Grupo ${matchGroup} • ${formatDate(matchDate)}`;
-    }
+    const title =
+      round === roundStage && matchGroup
+        ? `Grupo ${matchGroup}`
+        : getRound(round);
 
-    return getRound(round);
+    return `${title} • ${formatDate(matchDate)}`;
   };
 
   const getStatusClass = (estado) => {
