@@ -272,17 +272,26 @@ const getWorldCupMatches = async (
 
   const updateCarousel = (total) => {
     const stride = getCardStride();
-    const visibleCount = getVisibleCount(); // recalcula en cada llamada
+    const visibleCount = getVisibleCount();
 
     matchesContainer.style.transform = `translateX(-${
       currentIndex * stride
     }px)`;
 
-    carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
+    // Centrar el contenedor si todos los items caben sin necesidad de carrusel
+    if (!isMobile() && total <= visibleCount) {
+      matchesContainer.classList.add(classes.centeredCarousel);
+      carouselBtnPrev.style.display = "none";
+      carouselBtnNext.style.display = "none";
+      cardCounter.textContent = `Mostrando 1 de ${total}`;
+      return;
+    }
 
+    matchesContainer.classList.remove(classes.centeredCarousel);
+
+    carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
     carouselBtnNext.style.display =
       currentIndex + visibleCount >= total ? "none" : "";
-
     cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
   };
 
