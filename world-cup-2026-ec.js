@@ -145,8 +145,23 @@ const getWorldCupMatches = async (
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
   const getCalendarIcon = (estado) =>
     !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
-  const getMatchTime = (estado, matchTime) =>
-    !isFinished(estado) ? `${matchTime} EST` : "FT";
+
+  const getMatchTime = (estado, matchTime) => {
+    let matchTime = "";
+
+    if (isNext(estado)) {
+      matchTime = `${matchTime} EST`;
+      return matchTime;
+    }
+
+    if (isFinished(estado)) {
+      matchTime = "FT";
+      return matchTime;
+    }
+
+    matchTime = estado;
+    return matchTime;
+  };
 
   const getPenalties = (estado, penales) => {
     let penaltiesScore = "";
