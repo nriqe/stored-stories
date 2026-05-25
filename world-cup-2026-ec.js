@@ -10,6 +10,7 @@ const getWorldCupMatches = async (
   jsonPath
 ) => {
   console.log("IS LIVE:", isLive);
+  const timeInterval = 60000; //1 min
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
 
@@ -338,5 +339,31 @@ const getWorldCupMatches = async (
   if (matches?.length > 0) {
     renderMatches(matches);
     initCarousel(matches);
+  }
+
+  if (isLive) {
+    setInterval(async () => {
+      try {
+        const updatedMatches = await getWorldCupMatchesFromApi();
+
+        if (!updatedMatches?.length) return;
+
+        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel
+        renderMatches(updatedMatches);
+
+        // Restaura los estilos del carousel que renderMatches limpia con innerHTML = ""
+        matchesContainer.style.overflow = "visible";
+        matchesContainer.style.transition = "transform 0.35s ease";
+        matchesContainer.style.willChange = "transform";
+
+        // Reaplica la posición actual sin resetear currentIndex
+        const stride = getCardStride();
+        matchesContainer.style.transform = `translateX(-${
+          currentIndex * stride
+        }px)`;
+      } catch (error) {
+        console.error("Error al actualizar los partidos en vivo:", error);
+      }
+    }, timeInterval); // cada 60 segundos
   }
 };
