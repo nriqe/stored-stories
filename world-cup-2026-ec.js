@@ -33,11 +33,11 @@ const getWorldCupMatches = async (
 
   const MOBILE_STEP = 1;
   const TABLET_STEP = 2;
-  const DESKTOP_STEP = 3;
+  const DESKTOP_STEP = 4;
 
   const MOBILE_VISIBLE = 1;
   const TABLET_VISIBLE = 2;
-  const DESKTOP_VISIBLE = 3;
+  const DESKTOP_VISIBLE = 4;
 
   if (
     !matchesContainer ||
