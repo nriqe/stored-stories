@@ -343,6 +343,7 @@ const getWorldCupMatches = async (
 
   if (isLive) {
     setInterval(async () => {
+      console.log("Refetching...");
       try {
         const updatedMatches = await getWorldCupMatchesFromApi();
 
