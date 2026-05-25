@@ -4,10 +4,12 @@ const getWorldCupMatches = async (
   idCarouselBtnPrev,
   idCarouselBtnNext,
   idCardCounter,
+  isLive,
   round,
   strClasses,
   jsonPath
 ) => {
+  console.log("IS LIVE:", isLive);
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
 
@@ -64,8 +66,6 @@ const getWorldCupMatches = async (
 
     return rounds[round] ? rounds[round] : "";
   };
-
-  console.log("FASE:", getRound(round));
 
   const getWorldCupMatchesFromApi = async () => {
     const currentTime = new Date().getTime();
