@@ -147,20 +147,20 @@ const getWorldCupMatches = async (
     !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
 
   const getMatchTime = (estado, matchTime) => {
-    let matchTime = "";
+    let finalMatchTime = "";
 
     if (isNext(estado)) {
-      matchTime = `${matchTime} EST`;
-      return matchTime;
+      finalMatchTime = `${matchTime} EST`;
+      return finalMatchTime;
     }
 
     if (isFinished(estado)) {
-      matchTime = "FT";
-      return matchTime;
+      finalMatchTime = "FT";
+      return finalMatchTime;
     }
 
-    matchTime = estado;
-    return matchTime;
+    finalMatchTime = estado;
+    return finalMatchTime;
   };
 
   const getPenalties = (estado, penales) => {
