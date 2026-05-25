@@ -245,10 +245,20 @@ const getWorldCupMatches = async (
     return DESKTOP_STEP;
   };
 
-  const getVisibleCount = () => {
+  /* const getVisibleCount = () => {
     if (isMobile()) return MOBILE_VISIBLE;
     if (isTablet()) return TABLET_VISIBLE;
     return DESKTOP_VISIBLE;
+  }; */
+  const getVisibleCount = () => {
+    const containerWidth = matchesContainer.parentElement.offsetWidth;
+    const stride = getCardStride();
+    if (!stride) {
+      if (isMobile()) return MOBILE_VISIBLE;
+      if (isTablet()) return TABLET_VISIBLE;
+      return DESKTOP_VISIBLE;
+    }
+    return Math.floor(containerWidth / stride) || 1;
   };
 
   // ── Carousel ──────────────────────────────────────────────────────────────
@@ -262,7 +272,7 @@ const getWorldCupMatches = async (
 
   const updateCarousel = (total) => {
     const stride = getCardStride();
-    const visibleCount = getVisibleCount();
+    const visibleCount = getVisibleCount(); // recalcula en cada llamada
 
     matchesContainer.style.transform = `translateX(-${
       currentIndex * stride
@@ -273,7 +283,6 @@ const getWorldCupMatches = async (
     carouselBtnNext.style.display =
       currentIndex + visibleCount >= total ? "none" : "";
 
-    // Contador: siempre de 1 en 1
     cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
   };
 
