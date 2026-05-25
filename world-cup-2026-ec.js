@@ -9,7 +9,7 @@ const getWorldCupMatches = async (
   strClasses,
   jsonPath
 ) => {
-  console.log("IS LIVE:", isLive);
+  console.log("Live activado:", isLive);
   const timeInterval = 60000; //1 min
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
@@ -343,7 +343,7 @@ const getWorldCupMatches = async (
 
   if (isLive) {
     setInterval(async () => {
-      console.log("Refetching...");
+      console.log("Refetching de partidos...");
       try {
         const updatedMatches = await getWorldCupMatchesFromApi();
 
