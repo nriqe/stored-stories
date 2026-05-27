@@ -249,7 +249,7 @@ const getWorldCupMatches = async (
           ${wrapWithLink(
             getTeamInfo(match.slugSeleccion2, match.seleccion2),
             matchUrl
-          )}
+          )}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles2, match.estado)}
