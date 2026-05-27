@@ -199,6 +199,14 @@ const getWorldCupMatches = async (
     return `<a href="${url}" class="${classes.matchLink}" target="_blank" rel="noopener noreferrer">${content}</a>`;
   };
 
+  const getTeamInfo = (slugSeleccion, seleccion) => `
+    <div class="${classes.teamInfo}">
+      <img class="${classes.flag}" src="${getFlagPath(
+    slugSeleccion
+  )}" alt="${seleccion}" loading="lazy" />
+      <span class="${classes.teamName}">${seleccion}</span>
+    </div>`;
+
   const renderMatch = (match) => {
     const article = document.createElement("article");
     article.className = `${classes.fixtureCard} ${
@@ -214,22 +222,6 @@ const getWorldCupMatches = async (
       SITE_DEPOR
     );
 
-    const team1Info = `
-      <div class="${classes.teamInfo}">
-        <img class="${classes.flag}" src="${getFlagPath(
-      match.slugSeleccion1
-    )}" alt="${match.seleccion1}" loading="lazy" />
-        <span class="${classes.teamName}">${match.seleccion1}</span>
-      </div>`;
-
-    const team2Info = `
-      <div class="${classes.teamInfo}">
-        <img class="${classes.flag}" src="${getFlagPath(
-      match.slugSeleccion2
-    )}" alt="${match.seleccion2}" loading="lazy" />
-        <span class="${classes.teamName}">${match.seleccion2}</span>
-      </div>`;
-
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
         <span class="${classes.fixtureCardGroup}">
@@ -243,7 +235,10 @@ const getWorldCupMatches = async (
       </header>
       <section class="${classes.teamsContainer}">
         <div class="${classes.team}">
-          ${wrapWithLink(team1Info, matchUrl)}
+          ${wrapWithLink(
+            getTeamInfo(match.slugSeleccion1, match.seleccion1),
+            matchUrl
+          )}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles1, match.estado)}
@@ -252,7 +247,10 @@ const getWorldCupMatches = async (
           </div>
         </div>
         <div class="${classes.team}">
-          ${wrapWithLink(team2Info, matchUrl)}
+          ${wrapWithLink(
+            getTeamInfo(match.slugSeleccion2, match.seleccion2),
+            matchUrl
+          )}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles2, match.estado)}
