@@ -182,12 +182,53 @@ const getWorldCupMatches = async (
     return penaltiesScore;
   };
 
+  const getMatchLink = (
+    arcSite,
+    notaElComercio,
+    notaDepor,
+    SITE_ELCOMERCIO,
+    SITE_DEPOR
+  ) => {
+    if (arcSite === SITE_ELCOMERCIO && notaElComercio) return notaElComercio;
+    if (arcSite === SITE_DEPOR && notaDepor) return notaDepor;
+    return null;
+  };
+
+  const wrapWithLink = (content, url) => {
+    if (!url) return content;
+    return `<a href="${url}" class="${classes.matchLink}">${content}</a>`;
+  };
+
   const renderMatch = (match) => {
     const article = document.createElement("article");
     article.className = `${classes.fixtureCard} ${
       isFinished(match.estado) ? classes.fixturefinishedCard : ""
     }`;
     article.dataset.id = match.iD;
+
+    const matchUrl = getMatchLink(
+      arcSite,
+      match.notaElComercio,
+      match.notaDepor,
+      SITE_ELCOMERCIO,
+      SITE_DEPOR
+    );
+
+    const team1Info = `
+      <div class="${classes.teamInfo}">
+        <img class="${classes.flag}" src="${getFlagPath(
+      match.slugSeleccion1
+    )}" alt="${match.seleccion1}" loading="lazy" />
+        <span class="${classes.teamName}">${match.seleccion1}</span>
+      </div>`;
+
+    const team2Info = `
+      <div class="${classes.teamInfo}">
+        <img class="${classes.flag}" src="${getFlagPath(
+      match.slugSeleccion2
+    )}" alt="${match.seleccion2}" loading="lazy" />
+        <span class="${classes.teamName}">${match.seleccion2}</span>
+      </div>`;
 
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
@@ -202,12 +243,7 @@ const getWorldCupMatches = async (
       </header>
       <section class="${classes.teamsContainer}">
         <div class="${classes.team}">
-          <div class="${classes.teamInfo}">
-            <img class="${classes.flag}" src="${getFlagPath(
-      match.slugSeleccion1
-    )}" alt="${match.seleccion1}" loading="lazy" />
-            <span class="${classes.teamName}">${match.seleccion1}</span>
-          </div>
+          ${wrapWithLink(team1Info, matchUrl)}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles1, match.estado)}
@@ -216,12 +252,7 @@ const getWorldCupMatches = async (
           </div>
         </div>
         <div class="${classes.team}">
-          <div class="${classes.teamInfo}">
-            <img class="${classes.flag}" src="${getFlagPath(
-      match.slugSeleccion2
-    )}" alt="${match.seleccion2}" loading="lazy" />
-            <span class="${classes.teamName}">${match.seleccion2}</span>
-          </div>
+          ${wrapWithLink(team2Info, matchUrl)}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
               ${getScoreValue(match.goles2, match.estado)}
