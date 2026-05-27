@@ -12,8 +12,7 @@ const getWorldCupMatches = async (
   SITE_DEPOR,
   SITE_ELCOMERCIO
 ) => {
-  console.log("Live activado:", isLive);
-  console.log("SITES:", arcSite, SITE_DEPOR, SITE_ELCOMERCIO);
+  console.log("Live de marcadores activado:", isLive);
   const timeInterval = 60000; //1 min
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
