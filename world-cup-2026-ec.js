@@ -196,7 +196,7 @@ const getWorldCupMatches = async (
 
   const wrapWithLink = (content, url) => {
     if (!url) return content;
-    return `<a href="${url}" class="${classes.matchLink}">${content}</a>`;
+    return `<a href="${url}" class="${classes.matchLink}" target="_blank" rel="noopener noreferrer">${content}</a>`;
   };
 
   const renderMatch = (match) => {
