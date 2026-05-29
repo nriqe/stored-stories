@@ -142,8 +142,7 @@ const getWorldCupMatches = async (
   const isNext = (estado) => estado === nextMatchState;
 
   const getFlagPath = (slugTeam) =>
-    //`https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
-    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/${slugTeam}.png`;
+    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
 
   const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
