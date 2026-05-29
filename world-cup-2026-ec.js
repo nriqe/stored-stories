@@ -10,7 +10,7 @@ const getWorldCupMatches = async (
   jsonPath,
   arcSite,
   SITE_DEPOR,
-  SITE_ELCOMERCIO
+  SITE_ELCOMERCIO,
 ) => {
   console.log("Live de marcadores activado:", isLive);
   const timeInterval = 60000; //1 min
@@ -19,7 +19,7 @@ const getWorldCupMatches = async (
 
   const matchesContainer = document.getElementById(idMatchesContainer);
   const carouselBtnsContainer = document.getElementById(
-    idCarouselBtnsContainer
+    idCarouselBtnsContainer,
   );
   const carouselBtnPrev = document.getElementById(idCarouselBtnPrev);
   const carouselBtnNext = document.getElementById(idCarouselBtnNext);
@@ -142,7 +142,8 @@ const getWorldCupMatches = async (
   const isNext = (estado) => estado === nextMatchState;
 
   const getFlagPath = (slugTeam) =>
-    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+    //`https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/${slugTeam}.png`;
 
   const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
@@ -186,7 +187,7 @@ const getWorldCupMatches = async (
     notaElComercio,
     notaDepor,
     SITE_ELCOMERCIO,
-    SITE_DEPOR
+    SITE_DEPOR,
   ) => {
     if (arcSite === SITE_ELCOMERCIO && notaElComercio) return notaElComercio;
     if (arcSite === SITE_DEPOR && notaDepor) return notaDepor;
@@ -201,8 +202,8 @@ const getWorldCupMatches = async (
   const getTeamInfo = (slugSeleccion, seleccion) => `
     <div class="${classes.teamInfo}">
       <img class="${classes.flag}" src="${getFlagPath(
-    slugSeleccion
-  )}" alt="${seleccion}" loading="lazy" />
+        slugSeleccion,
+      )}" alt="${seleccion}" loading="lazy" />
       <span class="${classes.teamName}">${seleccion}</span>
     </div>`;
 
@@ -218,7 +219,7 @@ const getWorldCupMatches = async (
       match.notaElComercio,
       match.notaDepor,
       SITE_ELCOMERCIO,
-      SITE_DEPOR
+      SITE_DEPOR,
     );
 
     article.innerHTML = `
@@ -227,8 +228,8 @@ const getWorldCupMatches = async (
           ${getCardTitle(match.grupo ?? "", match.fecha)}
         </span>
         <span class="${classes.fixtureCardStatus} ${getStatusClass(
-      match.estado
-    )}">
+          match.estado,
+        )}">
           ${getStatus(match.estado)}
         </span>
       </header>
@@ -236,7 +237,7 @@ const getWorldCupMatches = async (
         <div class="${classes.team}">
           ${wrapWithLink(
             getTeamInfo(match.slugSeleccion1, match.seleccion1),
-            matchUrl
+            matchUrl,
           )}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
@@ -248,7 +249,7 @@ const getWorldCupMatches = async (
         <div class="${classes.team}">
           ${wrapWithLink(
             getTeamInfo(match.slugSeleccion2, match.seleccion2),
-            matchUrl
+            matchUrl,
           )}
           <div class="${classes.teamScore}">
             <span class="${classes.score} ${getScoreClass(match.estado)}">
@@ -262,9 +263,9 @@ const getWorldCupMatches = async (
         <div class="${classes.calendarTime}">
           ${getCalendarIcon(match.estado)}
           <span class="${classes.time}">${getMatchTime(
-      match.estado,
-      match.horaLima
-    )}</span>
+            match.estado,
+            match.horaLima,
+          )}</span>
         </div>
         <span class="${classes.stadium}">${match.sede}</span>
       </footer>
