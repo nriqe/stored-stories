@@ -74,22 +74,6 @@ const getWorldCupMatches = async (
     return `${title} • ${formatDate(matchDate)}`;
   };
 
-  const getStatusClass = (estado) => {
-    const statusMap = {
-      Próximo: classes.nextFixtureCardStatus,
-      "En vivo": classes.liveFixtureCardStatus,
-      "1er Tiempo": classes.liveFixtureCardStatus,
-      Entretiempo: classes.liveFixtureCardStatus,
-      "2do Tiempo": classes.liveFixtureCardStatus,
-      "1er Tiempo Extra": classes.liveFixtureCardStatus,
-      "2do Tiempo Extra": classes.liveFixtureCardStatus,
-      "Medio Tiempo": classes.liveFixtureCardStatus,
-      Penales: classes.liveFixtureCardStatus,
-      Finalizado: classes.finishedFixtureCardStatus,
-    };
-    return statusMap[estado] ?? classes.nextFixtureCardStatus;
-  };
-
   const getStatus = (estado) => {
     const statusMap = {
       Próximo: nextMatchState,
@@ -108,6 +92,7 @@ const getWorldCupMatches = async (
 
   const isFinished = (estado) => estado === finishedState;
   const isNext = (estado) => estado === nextMatchState;
+  const isHalFTime = (estado) => estado === "Entretiempo";
 
   const getFlagPath = (slugTeam) =>
     `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
@@ -129,6 +114,7 @@ const getWorldCupMatches = async (
   const getMatchTime = (estado, matchTime) => {
     if (isNext(estado)) return formatTime(matchTime);
     if (isFinished(estado)) return "Finalizado";
+    if (isHalFTime(estado)) return "Medio Tiempo";
     return estado;
   };
 
