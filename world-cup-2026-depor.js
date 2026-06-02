@@ -168,7 +168,7 @@ const getWorldCupMatches = async (
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
-    article.class = classes.wrapTeam;
+    article.className = classes.wrapTeam;
     article.dataset.id = match.iD;
 
     const matchUrl = getMatchLink(
