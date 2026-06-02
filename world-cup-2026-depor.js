@@ -1,9 +1,5 @@
 const getWorldCupMatches = async (
   idMatchesContainer,
-  idCarouselBtnsContainer,
-  idCarouselBtnPrev,
-  idCarouselBtnNext,
-  idCardCounter,
   isLive,
   round,
   strClasses,
@@ -13,19 +9,11 @@ const getWorldCupMatches = async (
   SITE_ELCOMERCIO,
 ) => {
   console.log("Live de marcadores activado:", isLive);
-  const timeInterval = 60000; //1 min
+  const timeInterval = 60000;
   const classes = JSON.parse(strClasses);
   const successfullResponse = 200;
 
   const matchesContainer = document.getElementById(idMatchesContainer);
-  const carouselBtnsContainer = document.getElementById(
-    idCarouselBtnsContainer,
-  );
-  const carouselBtnPrev = document.getElementById(idCarouselBtnPrev);
-  const carouselBtnNext = document.getElementById(idCarouselBtnNext);
-  const cardCounter = document.getElementById(idCardCounter);
-
-  const hiddenArrowsClass = classes.hiddenArrows;
 
   const roundStage = "fase-de-grupos";
 
@@ -33,29 +21,11 @@ const getWorldCupMatches = async (
   const penaltiesState = "Penales";
   const finishedState = "Finalizado";
 
-  const MOBILE_BREAKPOINT = 640; // < 640px
-  const TABLET_BREAKPOINT = 1024; // 640px – 1023px
-  // desktop                         // >= 1024px
-
-  const MOBILE_STEP = 1;
-  const TABLET_STEP = 2;
-  const DESKTOP_STEP = 3;
-
-  const MOBILE_VISIBLE = 1;
-  const TABLET_VISIBLE = 2;
-  const DESKTOP_VISIBLE = 4;
-
-  if (
-    !matchesContainer ||
-    !carouselBtnPrev ||
-    !carouselBtnNext ||
-    !cardCounter
-  ) {
-    throw new Error("No existe uno de los contenedores o botones.");
+  if (!matchesContainer) {
+    throw new Error("No existe el contenedor de partidos.");
   }
 
   let matches = [];
-  let currentIndex = 0;
 
   const getRound = (round) => {
     const rounds = {
@@ -67,7 +37,6 @@ const getWorldCupMatches = async (
       "3-4-puesto": "3er y 4to puesto",
       final: "Final",
     };
-
     return rounds[round] ? rounds[round] : "";
   };
 
@@ -102,7 +71,6 @@ const getWorldCupMatches = async (
       round === roundStage && matchGroup
         ? `Grupo ${matchGroup}`
         : getRound(round);
-
     return `${title} • ${formatDate(matchDate)}`;
   };
 
@@ -144,7 +112,6 @@ const getWorldCupMatches = async (
   const getFlagPath = (slugTeam) =>
     `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
 
-  const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
   const getScoreValue = (goles, estado) =>
     `<div class="${classes.wrapScore}">
         <span>
@@ -156,33 +123,19 @@ const getWorldCupMatches = async (
     !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
 
   const getMatchTime = (estado, matchTime) => {
-    let finalMatchTime = "";
-
-    if (isNext(estado)) {
-      finalMatchTime = `${matchTime} EST`;
-      return finalMatchTime;
-    }
-
-    if (isFinished(estado)) {
-      finalMatchTime = "Finalizado";
-      return finalMatchTime;
-    }
-
-    finalMatchTime = estado;
-    return finalMatchTime;
+    if (isNext(estado)) return `${matchTime} EST`;
+    if (isFinished(estado)) return "Finalizado";
+    return estado;
   };
 
   const getPenalties = (estado, penales) => {
-    let penaltiesScore = "";
-
     if (
       (estado === penaltiesState || estado === finishedState) &&
       penales !== ""
     ) {
-      penaltiesScore = `<span class="${classes.score}">(${penales})</span>`;
+      return `<span class="${classes.score}">(${penales})</span>`;
     }
-
-    return penaltiesScore;
+    return "";
   };
 
   const getMatchLink = (
@@ -226,55 +179,6 @@ const getWorldCupMatches = async (
       SITE_DEPOR,
     );
 
-    /* article.innerHTML = `
-      <header class="${classes.fixtureCardTopHeader}">
-        <span class="${classes.fixtureCardGroup}">
-          ${getCardTitle(match.grupo ?? "", match.fecha)}
-        </span>
-        <span class="${classes.fixtureCardStatus} ${getStatusClass(
-          match.estado,
-        )}">
-          ${getStatus(match.estado)}
-        </span>
-      </header>
-      <section class="${classes.teamsContainer}">
-        <div class="${classes.team}">
-          ${wrapWithLink(
-            getTeamInfo(match.slugSeleccion1, match.seleccion1),
-            matchUrl,
-          ).trim()}
-          <div class="${classes.teamScore}">
-            <span class="${classes.score}">
-              ${getScoreValue(match.goles1, match.estado)}
-            </span>
-            ${getPenalties(match.estado, match.pen1 ?? "")}
-          </div>
-        </div>
-        <div class="${classes.team}">
-          ${wrapWithLink(
-            getTeamInfo(match.slugSeleccion2, match.seleccion2),
-            matchUrl,
-          ).trim()}
-          <div class="${classes.teamScore}">
-            <span class="${classes.score}">
-              ${getScoreValue(match.goles2, match.estado)}
-            </span>
-            ${getPenalties(match.estado, match.pen2 ?? "")}
-          </div>
-        </div>
-      </section>
-      <footer class="${classes.cardBottom}">
-        <div class="${classes.calendarTime}">
-          ${getCalendarIcon(match.estado)}
-          <span class="${classes.time}">${getMatchTime(
-            match.estado,
-            match.horaLima,
-          )}</span>
-        </div>
-        <span class="${classes.stadium}">${match.sede}</span>
-      </footer>
-    `; */
-
     article.innerHTML = `
       <div class="${classes.team}">
         ${wrapWithLink(
@@ -311,108 +215,12 @@ const getWorldCupMatches = async (
     matchesContainer.appendChild(fragment);
   };
 
-  // ── Breakpoint helpers ────────────────────────────────────────────────────
-
-  const isMobile = () => window.innerWidth < MOBILE_BREAKPOINT;
-  const isTablet = () =>
-    window.innerWidth >= MOBILE_BREAKPOINT &&
-    window.innerWidth < TABLET_BREAKPOINT;
-  const isDesktop = () => window.innerWidth >= TABLET_BREAKPOINT;
-
-  const getStep = () => {
-    if (isMobile()) return MOBILE_STEP;
-    if (isTablet()) return TABLET_STEP;
-    return DESKTOP_STEP;
-  };
-
-  const getVisibleCount = () => {
-    const containerWidth = matchesContainer.parentElement.offsetWidth;
-    const stride = getCardStride();
-    if (!stride) {
-      if (isMobile()) return MOBILE_VISIBLE;
-      if (isTablet()) return TABLET_VISIBLE;
-      return DESKTOP_VISIBLE;
-    }
-    return Math.floor(containerWidth / stride) || 1;
-  };
-
-  // ── Carousel ──────────────────────────────────────────────────────────────
-
-  const getCardStride = () => {
-    const firstCard = matchesContainer.firstElementChild;
-    if (!firstCard) return 0;
-    const gap = parseFloat(getComputedStyle(matchesContainer).gap) || 0;
-    return firstCard.offsetWidth + gap;
-  };
-
-  const updateCarousel = (total) => {
-    const stride = getCardStride();
-    const visibleCount = getVisibleCount();
-
-    matchesContainer.style.transform = `translateX(-${
-      currentIndex * stride
-    }px)`;
-
-    // Centrar el contenedor si todos los items caben sin necesidad de carrusel
-    if (!isMobile() && total <= visibleCount) {
-      matchesContainer.classList.add(classes.centeredCarousel);
-      carouselBtnPrev.style.display = "none";
-      carouselBtnNext.style.display = "none";
-      cardCounter.textContent = `Mostrando 1 de ${total}`;
-      return;
-    }
-
-    matchesContainer.classList.remove(classes.centeredCarousel);
-
-    carouselBtnPrev.style.display = currentIndex === 0 ? "none" : "";
-    carouselBtnNext.style.display =
-      currentIndex + visibleCount >= total ? "none" : "";
-    cardCounter.textContent = `Mostrando ${currentIndex + 1} de ${total}`;
-  };
-
-  const initCarousel = (matchList) => {
-    const total = matchList.length;
-
-    currentIndex = 0;
-    carouselBtnsContainer.classList.remove(hiddenArrowsClass);
-    carouselBtnPrev.style.display = "none";
-
-    matchesContainer.style.overflow = "visible";
-    matchesContainer.style.transition = "transform 0.35s ease";
-    matchesContainer.style.willChange = "transform";
-
-    updateCarousel(total);
-
-    carouselBtnNext.addEventListener("click", () => {
-      const visibleCount = getVisibleCount();
-      const step = getStep();
-      if (currentIndex + visibleCount < total) {
-        currentIndex = Math.min(currentIndex + step, total - visibleCount);
-        updateCarousel(total);
-      }
-    });
-
-    carouselBtnPrev.addEventListener("click", () => {
-      const step = getStep();
-      if (currentIndex > 0) {
-        currentIndex = Math.max(currentIndex - step, 0);
-        updateCarousel(total);
-      }
-    });
-
-    window.addEventListener("resize", () => {
-      currentIndex = 0;
-      updateCarousel(total);
-    });
-  };
-
   // ── Init ──────────────────────────────────────────────────────────────────
 
   matches = await getWorldCupMatchesFromApi();
 
   if (matches?.length > 0) {
     renderMatches(matches);
-    initCarousel(matches);
   }
 
   if (isLive) {
@@ -420,25 +228,11 @@ const getWorldCupMatches = async (
       console.log("Refetching de partidos...");
       try {
         const updatedMatches = await getWorldCupMatchesFromApi();
-
         if (!updatedMatches?.length) return;
-
-        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel
         renderMatches(updatedMatches);
-
-        // Restaura los estilos del carousel que renderMatches limpia con innerHTML = ""
-        matchesContainer.style.overflow = "visible";
-        matchesContainer.style.transition = "transform 0.35s ease";
-        matchesContainer.style.willChange = "transform";
-
-        // Reaplica la posición actual sin resetear currentIndex
-        const stride = getCardStride();
-        matchesContainer.style.transform = `translateX(-${
-          currentIndex * stride
-        }px)`;
       } catch (error) {
         console.error("Error al actualizar los partidos en vivo:", error);
       }
-    }, timeInterval); // cada 60 segundos
+    }, timeInterval);
   }
 };
