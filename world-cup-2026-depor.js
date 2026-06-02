@@ -119,11 +119,15 @@ const getWorldCupMatches = async (
         </span>
       </div>`;
 
-  const getCalendarIcon = (estado) =>
-    !isFinished(estado) ? `<div class="${classes.calendarIcon}"></div>` : "";
+  const formatTime = (timeStr) => {
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    const period = hours < 12 ? "am" : "pm";
+    const formattedHours = hours % 12 || 12;
+    return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+  };
 
   const getMatchTime = (estado, matchTime) => {
-    if (isNext(estado)) return `${matchTime} EST`;
+    if (isNext(estado)) return formatTime(matchTime);
     if (isFinished(estado)) return "Finalizado";
     return estado;
   };
