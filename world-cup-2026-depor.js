@@ -95,7 +95,8 @@ const getWorldCupMatches = async (
   const isHalFTime = (estado) => estado === "Entretiempo";
 
   const getFlagPath = (slugTeam) =>
-    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+    // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+    "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
 
   const getScoreValue = (goles, estado) =>
     `<div class="${classes.wrapScore}">
