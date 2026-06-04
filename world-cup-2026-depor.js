@@ -171,6 +171,7 @@ const getWorldCupMatches = async (
     );
 
     article.innerHTML = `
+      <h6 class="${classes.group}">${getCardTitle(match.grupo ?? "", match.fecha)}</h6>
       <div class="${classes.team}">
         ${wrapWithLink(
           getTeamInfo(match.slugSeleccion1, match.seleccion1),
