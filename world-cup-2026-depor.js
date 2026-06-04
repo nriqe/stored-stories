@@ -159,7 +159,7 @@ const getWorldCupMatches = async (
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
-    article.className = `${classes.teamName}  ${getPenalties(match.estado, match.pen1 ?? "") !== "" ? classes.wrapTeamWithPenalties : ""}`;
+    article.className = `${classes.wrapTeam}  ${getPenalties(match.estado, match.pen1 ?? "") !== "" ? classes.wrapTeamWithPenalties : ""}`;
     article.dataset.id = match.iD;
 
     const matchUrl = getMatchLink(
