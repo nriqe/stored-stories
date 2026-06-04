@@ -204,6 +204,11 @@ const getWorldCupMatches = async (
     const fragment = document.createDocumentFragment();
     matchList.forEach((match) => fragment.appendChild(renderMatch(match)));
     matchesContainer.appendChild(fragment);
+    matchesContainer.setAttribute("aria-busy", "false");
+    matchesContainer.setAttribute(
+      "aria-label",
+      "Partidos de fútbol con sus resultados y horarios actualizados",
+    );
   };
 
   // ── Init ──────────────────────────────────────────────────────────────────
