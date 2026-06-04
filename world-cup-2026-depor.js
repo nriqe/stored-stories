@@ -54,7 +54,7 @@ const getWorldCupMatches = async (
       const result = await response.json();
       return result;
     } catch (error) {
-      throw new Error("ERROR DE API LOS PARTIDOS: ", error);
+      throw new Error("ERROR DE API DE LOS PARTIDOS: ", error);
     }
   };
 
@@ -95,8 +95,8 @@ const getWorldCupMatches = async (
   const isHalFTime = (estado) => estado === "Entretiempo";
 
   const getFlagPath = (slugTeam) =>
-    // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
-    "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
+    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+  // "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
 
   const getScoreValue = (goles, estado) =>
     `<div class="${classes.wrapScore}">
