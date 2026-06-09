@@ -92,10 +92,11 @@ const getWorldCupMatches = async (
 
   const isFinished = (estado) => estado === finishedState;
   const isNext = (estado) => estado === nextMatchState;
-  const isHalFTime = (estado) => estado === "Entretiempo";
+  const isHalfTime = (estado) => estado === "Entretiempo";
 
   const getFlagPath = (slugTeam) =>
-    `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+    `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam}.png`
+   // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
   // "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
 
   const getScoreValue = (goles, estado) =>
@@ -115,7 +116,7 @@ const getWorldCupMatches = async (
   const getMatchTime = (estado, matchTime) => {
     if (isNext(estado)) return formatTime(matchTime);
     if (isFinished(estado)) return "Finalizado";
-    if (isHalFTime(estado)) return "Medio Tiempo";
+    if (isHalfTime(estado)) return "Medio Tiempo";
     return estado;
   };
 
