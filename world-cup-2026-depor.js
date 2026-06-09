@@ -100,11 +100,7 @@ const getWorldCupMatches = async (
   // "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
 
   const getScoreValue = (goles, estado) =>
-    `<div class="${classes.wrapScore}">
-        <span>
-          ${isNext(estado) ? "-" : goles}
-        </span>
-      </div>`;
+    `<div class="${classes.wrapScore}"><span>${isNext(estado) ? "-" : goles}</span></div>`;
 
   const formatTime = (timeStr) => {
     const [hours, minutes] = timeStr.split(":").map(Number);
@@ -148,14 +144,7 @@ const getWorldCupMatches = async (
   };
 
   const getTeamInfo = (slugSeleccion, seleccion) => `
-    <img
-      class="${classes.flag}"
-      alt="${seleccion}"
-      src="${getFlagPath(slugSeleccion)}"
-      width="18"
-      height="18"
-      loading="lazy"
-    />
+    <img class="${classes.flag}" alt="${seleccion}" src="${getFlagPath(slugSeleccion)}" width="18" height="18" loading="lazy" />
     <span class="${classes.teamName}">${seleccion}</span>`;
 
   const renderMatch = (match) => {
