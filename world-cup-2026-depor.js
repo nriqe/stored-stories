@@ -198,6 +198,15 @@ const getWorldCupMatches = async (
     );
   };
 
+  const sortMatches = (matchList) => {
+    return [...matchList].sort((a, b) => {
+      const aFinished = a.estado === finishedState;
+      const bFinished = b.estado === finishedState;
+      if (aFinished === bFinished) return 0;
+      return aFinished ? 1 : -1;
+    });
+  };
+
   // ── Init ──────────────────────────────────────────────────────────────────
 
   matches = await getWorldCupMatchesFromApi();
