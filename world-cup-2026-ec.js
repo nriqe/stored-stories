@@ -198,12 +198,9 @@ const getWorldCupMatches = async (
   };
 
   const getTeamInfo = (slugSeleccion, seleccion) => `
-    <div class="${classes.teamInfo}">
-      <img class="${classes.flag}" src="${getFlagPath(
-        slugSeleccion,
-      )}" alt="${seleccion}" loading="lazy" />
-      <span class="${classes.teamName}">${seleccion}</span>
-    </div>`;
+    <div class="${classes.teamInfo}"><img class="${classes.flag}" src="${getFlagPath(
+      slugSeleccion,
+    )}" alt="${seleccion}" loading="lazy" /><span class="${classes.teamName}">${seleccion}</span></div>`;
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
@@ -286,11 +283,6 @@ const getWorldCupMatches = async (
     return DESKTOP_STEP;
   };
 
-  /* const getVisibleCount = () => {
-    if (isMobile()) return MOBILE_VISIBLE;
-    if (isTablet()) return TABLET_VISIBLE;
-    return DESKTOP_VISIBLE;
-  }; */
   const getVisibleCount = () => {
     const containerWidth = matchesContainer.parentElement.offsetWidth;
     const stride = getCardStride();
@@ -372,13 +364,23 @@ const getWorldCupMatches = async (
     });
   };
 
+  const sortMatches = (matchList) => {
+    return [...matchList].sort((a, b) => {
+      const aFinished = a.estado === finishedState;
+      const bFinished = b.estado === finishedState;
+      if (aFinished === bFinished) return 0;
+      return aFinished ? 1 : -1;
+    });
+  };
+
   // ── Init ──────────────────────────────────────────────────────────────────
 
   matches = await getWorldCupMatchesFromApi();
 
   if (matches?.length > 0) {
-    renderMatches(matches);
-    initCarousel(matches);
+    const sorted = sortMatches(matches);
+    renderMatches(sorted);
+    initCarousel(sorted);
   }
 
   if (isLive) {
@@ -390,7 +392,8 @@ const getWorldCupMatches = async (
         if (!updatedMatches?.length) return;
 
         // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel
-        renderMatches(updatedMatches);
+        const sorted = sortMatches(updatedMatches);
+        renderMatches(sorted);
 
         // Restaura los estilos del carousel que renderMatches limpia con innerHTML = ""
         matchesContainer.style.overflow = "visible";
