@@ -144,8 +144,7 @@ const getWorldCupMatches = async (
   };
 
   const getTeamInfo = (slugSeleccion, seleccion) => `
-    <img class="${classes.flag}" alt="${seleccion}" src="${getFlagPath(slugSeleccion)}" width="18" height="18" loading="lazy" />
-    <span class="${classes.teamName}">${seleccion}</span>`;
+    <img class="${classes.flag}" alt="${seleccion}" src="${getFlagPath(slugSeleccion)}" width="18" height="18" loading="lazy" /><span class="${classes.teamName}">${seleccion}</span>`;
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
@@ -182,10 +181,7 @@ const getWorldCupMatches = async (
           ${getPenalties(match.estado, match.pen2 ?? "")}
         </div>
       </div>
-      <span class="${classes.time}">${getMatchTime(
-        match.estado,
-        match.horaLima,
-      )}</span>
+      <span class="${classes.time}">${getMatchTime(match.estado, match.horaLima)}</span>
     `;
     return article;
   };
@@ -207,7 +203,9 @@ const getWorldCupMatches = async (
   matches = await getWorldCupMatchesFromApi();
 
   if (matches?.length > 0) {
-    renderMatches(matches);
+    const sorted = sortMatches(matches);
+    renderMatches(sorted);
+    initCarousel(sorted);
   }
 
   if (isLive) {
@@ -216,7 +214,8 @@ const getWorldCupMatches = async (
       try {
         const updatedMatches = await getWorldCupMatchesFromApi();
         if (!updatedMatches?.length) return;
-        renderMatches(updatedMatches);
+        const sorted = sortMatches(updatedMatches);
+        renderMatches(sorted);
       } catch (error) {
         console.error("Error al actualizar los partidos en vivo:", error);
       }
