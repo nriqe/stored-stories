@@ -391,7 +391,7 @@ const getWorldCupMatches = async (
 
         if (!updatedMatches?.length) return;
 
-        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel
+        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel //
         const sorted = sortMatches(updatedMatches);
         renderMatches(sorted);
 
