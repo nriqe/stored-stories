@@ -143,7 +143,7 @@ const getWorldCupMatches = async (
 
   const getFlagPath = (slugTeam) =>
     `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam.replace("rep-checa", "republica-checa").replace("bosnia-y-herzegovina", "bosnia-and-herzegovina").replace("rd-del-congo", "congo")}.png`;
-    // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
+  // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
 
   const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
   const getScoreValue = (goles, estado) => (isNext(estado) ? "-" : goles);
@@ -174,9 +174,7 @@ const getWorldCupMatches = async (
       (estado === penaltiesState || estado === finishedState) &&
       penales !== ""
     ) {
-      penaltiesScore = `<span class="${classes.score} ${getScoreClass(estado)}">
-             (${penales})
-            </span>`;
+      penaltiesScore = `<span class="${classes.score} ${getScoreClass(estado)}">(${penales})</span>`;
     }
 
     return penaltiesScore;
@@ -224,9 +222,7 @@ const getWorldCupMatches = async (
 
     article.innerHTML = `
       <header class="${classes.fixtureCardTopHeader}">
-        <span class="${classes.fixtureCardGroup}">
-          ${getCardTitle(match.grupo ?? "", match.fecha)}
-        </span>
+        <span class="${classes.fixtureCardGroup}">${getCardTitle(match.grupo ?? "", match.fecha)}</span>
         <span class="${classes.fixtureCardStatus} ${getStatusClass(
           match.estado,
         )}">
@@ -240,9 +236,7 @@ const getWorldCupMatches = async (
             matchUrl,
           ).trim()}
           <div class="${classes.teamScore}">
-            <span class="${classes.score} ${getScoreClass(match.estado)}">
-              ${getScoreValue(match.goles1, match.estado)}
-            </span>
+            <span class="${classes.score} ${getScoreClass(match.estado)}">${getScoreValue(match.goles1, match.estado)}</span>
             ${getPenalties(match.estado, match.pen1 ?? "")}
           </div>
         </div>
@@ -252,9 +246,7 @@ const getWorldCupMatches = async (
             matchUrl,
           ).trim()}
           <div class="${classes.teamScore}">
-            <span class="${classes.score} ${getScoreClass(match.estado)}">
-              ${getScoreValue(match.goles2, match.estado)}
-            </span>
+            <span class="${classes.score} ${getScoreClass(match.estado)}">${getScoreValue(match.goles2, match.estado)}</span>
             ${getPenalties(match.estado, match.pen2 ?? "")}
           </div>
         </div>
