@@ -45,6 +45,8 @@ const getWorldCupMatches = async (
   const TABLET_VISIBLE = 2;
   const DESKTOP_VISIBLE = 4;
 
+  const showAditional = "Sí";
+
   if (
     !matchesContainer ||
     !carouselBtnPrev ||
@@ -366,10 +368,12 @@ const getWorldCupMatches = async (
 
   const sortMatches = (matchList) => {
     return [...matchList].sort((a, b) => {
-      const aFinished = a.estado === finishedState;
-      const bFinished = b.estado === finishedState;
-      if (aFinished === bFinished) return 0;
-      return aFinished ? 1 : -1;
+      const getOrder = (match) => {
+        if (match.adicional === showAditional) return 2;
+        if (match.estado === finishedState) return 1;
+        return 0;
+      };
+      return getOrder(a) - getOrder(b);
     });
   };
 
