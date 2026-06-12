@@ -45,7 +45,7 @@ const getWorldCupMatches = async (
   const TABLET_VISIBLE = 2;
   const DESKTOP_VISIBLE = 4;
 
-  const showAditional = "Sí";
+  const showAditional = true;
 
   if (
     !matchesContainer ||
@@ -383,6 +383,7 @@ const getWorldCupMatches = async (
 
   if (matches?.length > 0) {
     const sorted = sortMatches(matches);
+    console.log(sorted);
     renderMatches(sorted);
     initCarousel(sorted);
   }
@@ -395,7 +396,7 @@ const getWorldCupMatches = async (
 
         if (!updatedMatches?.length) return;
 
-        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel //
+        // Re-renderiza solo las tarjetas, sin tocar el estado del carrusel
         const sorted = sortMatches(updatedMatches);
         renderMatches(sorted);
 
