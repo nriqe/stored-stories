@@ -383,7 +383,6 @@ const getWorldCupMatches = async (
 
   if (matches?.length > 0) {
     const sorted = sortMatches(matches);
-    console.log(sorted);
     renderMatches(sorted);
     initCarousel(sorted);
   }
