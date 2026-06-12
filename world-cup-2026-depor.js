@@ -21,6 +21,8 @@ const getWorldCupMatches = async (
   const penaltiesState = "Penales";
   const finishedState = "Finalizado";
 
+  const showAditional = true;
+
   if (!matchesContainer) {
     throw new Error("No existe el contenedor de partidos.");
   }
@@ -200,10 +202,12 @@ const getWorldCupMatches = async (
 
   const sortMatches = (matchList) => {
     return [...matchList].sort((a, b) => {
-      const aFinished = a.estado === finishedState;
-      const bFinished = b.estado === finishedState;
-      if (aFinished === bFinished) return 0;
-      return aFinished ? 1 : -1;
+      const getOrder = (match) => {
+        if (match.adicional === showAditional) return 2;
+        if (match.estado === finishedState) return 1;
+        return 0;
+      };
+      return getOrder(a) - getOrder(b);
     });
   };
 
