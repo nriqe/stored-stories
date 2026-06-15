@@ -390,7 +390,6 @@ const getWorldCupMatches = async (
 
   if (matches?.length > 0) {
     const sorted = sortMatches(matches);
-    console.log('ACTUALIZADO')
     renderMatches(sorted);
     initCarousel(sorted);
   }
