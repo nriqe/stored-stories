@@ -367,15 +367,22 @@ const getWorldCupMatches = async (
   };
 
   const sortMatches = (matchList) => {
-    return [...matchList].sort((a, b) => {
-      const getOrder = (match) => {
-        if (match.adicional === showAditional) return 2;
-        if (match.estado === finishedState) return 1;
-        return 0;
-      };
-      return getOrder(a) - getOrder(b);
-    });
-  };
+  return [...matchList].sort((a, b) => {
+    const getOrder = (match) => {
+      if (match.adicional === true) return 2;
+      if (match.estado === finishedState) return 1;
+      return 0;
+    };
+
+    const orderDiff = getOrder(a) - getOrder(b);
+    if (orderDiff !== 0) return orderDiff;
+
+    // Mismo grupo → orden cronológico por horaLima ("HH:MM")
+    const timeA = a.horaLima ?? "00:00";
+    const timeB = b.horaLima ?? "00:00";
+    return timeA.localeCompare(timeB);
+  });
+};
 
   // ── Init ──────────────────────────────────────────────────────────────────
 
