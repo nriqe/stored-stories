@@ -97,7 +97,7 @@ const getWorldCupMatches = async (
   const isHalfTime = (estado) => estado === "Entretiempo";
 
   const getFlagPath = (slugTeam) =>
-    `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam.replace("rep-checa", "republica-checa").replace("bosnia-y-herzegovina", "bosnia-and-herzegovina").replace("rd-del-congo", "congo")}.png`;
+    `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam.replace("rep-checa", "republica-checa").replace("bosnia-y-herzegovina", "bosnia-and-herzegovina").replace("rd-del-congo", "congo")}.png?${Date.now()}`;
   // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`; //
   // "https://cdna.elcomercio.pe/resources/dist/elcomercio/images/argentina.png";
 
