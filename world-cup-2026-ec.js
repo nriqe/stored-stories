@@ -144,7 +144,7 @@ const getWorldCupMatches = async (
   const isNext = (estado) => estado === nextMatchState;
 
   const getFlagPath = (slugTeam) =>
-    `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam.replace("rep-checa", "republica-checa").replace("bosnia-y-herzegovina", "bosnia-and-herzegovina").replace("rd-del-congo", "congo")}.png?${Date.now()}`;
+    `https://d3lyt7mv5ip2zx.cloudfront.net/polla2026/flags/${slugTeam.replace("rep-checa", "republica-checa").replace("bosnia-y-herzegovina", "bosnia-and-herzegovina").replace("rd-del-congo", "congo")}.png`;
   // `https://cdna.elcomercio.pe/resources/dist/elcomercio/images/wc-2026-flags/${slugTeam}.png`;
 
   const getScoreClass = (estado) => (isNext(estado) ? classes.emptyScore : "");
@@ -202,7 +202,7 @@ const getWorldCupMatches = async (
   const getTeamInfo = (slugSeleccion, seleccion) => `
     <div class="${classes.teamInfo}"><img class="${classes.flag}" src="${getFlagPath(
       slugSeleccion,
-    )}" alt="${seleccion}" loading="lazy" /><span class="${classes.teamName}">${seleccion}</span></div>`;
+    )}" alt="${seleccion}" loading="lazy" role="presentation"/><span class="${classes.teamName}">${seleccion}</span></div>`;
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
