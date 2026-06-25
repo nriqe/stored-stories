@@ -202,7 +202,7 @@ const getWorldCupMatches = async (
   const getTeamInfo = (slugSeleccion, seleccion) => `
     <div class="${classes.teamInfo}"><img class="${classes.flag}" src="${getFlagPath(
       slugSeleccion,
-    )}" alt="${seleccion}" loading="lazy" role="presentation"/><span class="${classes.teamName}">${seleccion}</span></div>`;
+    )}" alt="" loading="lazy" role="presentation"/><span class="${classes.teamName}">${seleccion}</span></div>`;
 
   const renderMatch = (match) => {
     const article = document.createElement("article");
